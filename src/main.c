@@ -2,6 +2,6 @@
 
 int	main(void)
 {
-	ft_printf("hello lem-in!\n");
+	ft_printf("Hello lem-in!\n");
 	return (0);
 }
