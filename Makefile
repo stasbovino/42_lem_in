@@ -6,7 +6,7 @@
 #    By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 23:35:25 by gwyman-m          #+#    #+#              #
-#    Updated: 2019/09/04 01:35:40 by sts              ###   ########.fr        #
+#    Updated: 2019/09/09 21:00:17 by gwyman-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC_DIR= src/
 
 HEADER= lem_in.h
 
-CFILES= main.c
+CFILES= main.c count_and_check_func.c valid_split.c validation.c
 
 SRC= $(addprefix $(SRC_DIR),$(CFILES))
 
