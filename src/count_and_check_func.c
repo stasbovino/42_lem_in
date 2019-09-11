@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_and_check_f.c                                :+:      :+:    :+:   */
+/*   count_and_check_func.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:49:08 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/09 19:12:19 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/11 16:16:39 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		check_overflow(char *num)
 	j = i + 1;
 	while (num[++i])
 		if (num[i] != '0')
-			break;
+			break ;
 	numlen = ft_strlen(num) - i;
 	if (numlen > 10)
 		return (1);
@@ -62,19 +62,21 @@ int		count_words(char *buf)
 	k = 0;
 	while (buf[i])
 	{
-		if (buf[i] != ' ')
+		if (buf[i] && buf[i] != ' ')
 		{
-			while (buf[i] != ' ' && buf[i])
+			while (buf[i] && buf[i] != ' ')
 				i++;
 			k++;
 		}
-		else if (buf[i] == ' ')
+		else if (buf[i] && buf[i] == ' ')
 		{
 			if (i == 0)
 				return (-1);
-			if (buf[i + 1] == ' ')
+			if (buf[i + 1] && buf[i + 1] == ' ')
 				return (-1);
 		}
+		if (!buf[i])
+			break ;
 		i++;
 	}
 	return (k);

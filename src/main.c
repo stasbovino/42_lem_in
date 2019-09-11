@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/09 19:06:04 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/11 18:10:13 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,36 @@
 
 char	**re_init(char ***input, int count)
 {
-	char	**new;
+	char	**tmp;
 	int		i;
+	int		j;
 
+	j = 0;
 	i = 0;
-	new = (char**)malloc(sizeof(char*) * (count + 10));
+	tmp = (char**)malloc(sizeof(char*) * (count + 2));
 	while (i < count)
 	{
-		new[i] = ft_strdup((*input)[i]);
+		tmp[i] = ft_strdup((*input)[i]);
 		free((*input)[i]);
+		i++;
 	}
 	free(*input);
-	return (new);
+	return (tmp);
+}
+
+char	**read_error(char ***input, int count, char **buf)
+{
+	int i;
+
+	i = 0;
+	free(*buf);
+	while (i < count)
+	{
+		free((*input)[i]);
+		i++;
+	}
+	free(*input);
+	return (NULL);
 }
 
 char	**read_input(int *size)
@@ -38,16 +56,18 @@ char	**read_input(int *size)
 	count = 0;
 	r = 0;
 	buf = NULL;
-	input = (char**)malloc(sizeof(char*) * 10);
+	input = (char**)malloc(sizeof(char*) * 2);
 	while ((r = get_next_line(0, &buf, 0)))
 	{
 		if (r == -1)
-			return (NULL);
-		input[count] = buf;
+			return (read_error(&input, count, &buf));
 		if (check_valid(buf, count))
-			return (NULL);
+			return (read_error(&input, count, &buf));
+		input[count] = ft_strdup(buf);
+		free(buf);
+		buf = NULL;
 		count++;
-		if (count % 10 == 0)
+		if (count % 2 == 0)
 			input = re_init(&input, count);
 	}
 	*size = count;
@@ -67,6 +87,7 @@ int	main(void)
 	if (input == NULL)
 	{
 		ft_printf("error\n");
+		get_next_line(0, NULL, 1);
 		return (1);
 	}
 	else
@@ -74,7 +95,10 @@ int	main(void)
 		while (++i < size)
 		{
 			ft_printf("%s\n", input[i]);
+			free(input[i]);
 		}
+		free(input);
+		get_next_line(0, NULL, 1);
 	}
 	return (0);
 }
