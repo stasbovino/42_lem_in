@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/12 13:32:48 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/12 18:16:27 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,12 @@ int	main(void)
 	}
 	else
 	{
+		if (create_table(input))
+		{
+			ft_printf("ERROR: invalid graph\n");
+		}
 		while (++i < size)
 		{
-			ft_printf("%s\n", input[i]);
 			free(input[i]);
 		}
 		free(input);

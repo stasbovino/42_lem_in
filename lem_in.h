@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/09 19:07:37 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/12 18:17:43 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 char		**read_input(int *size);
 char		**re_init(char ***input, int count);
+
+int			create_table(char **input);
 
 int			check_link(char *buf);
 int			check_valid(char *buf, int count);
