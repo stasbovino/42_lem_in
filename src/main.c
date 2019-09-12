@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/11 18:10:13 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/12 09:17:21 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ char	**re_init(char ***input, int count)
 {
 	char	**tmp;
 	int		i;
-	int		j;
 
-	j = 0;
 	i = 0;
 	tmp = (char**)malloc(sizeof(char*) * (count + 2));
 	while (i < count)
