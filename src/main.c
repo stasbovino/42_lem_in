@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/12 09:17:21 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/12 13:32:48 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ char	**read_input(int *size)
 	char	*buf;
 	int		r;
 	int		count;
+	int		useful;
 
+	useful = -1;
 	count = 0;
 	r = 0;
 	buf = NULL;
@@ -59,7 +61,9 @@ char	**read_input(int *size)
 	{
 		if (r == -1)
 			return (read_error(&input, count, &buf));
-		if (check_valid(buf, count))
+		if (buf && *buf && buf[0] != '#')
+			useful++;
+		if (check_valid(buf, useful))
 			return (read_error(&input, count, &buf));
 		input[count] = ft_strdup(buf);
 		free(buf);

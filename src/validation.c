@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/09 19:11:58 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/12 13:26:41 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		check_valid(char *buf, int count)
 
 	if (!buf || !*buf)
 		return (1);
+	if (buf[0] == '#')
+		return (0);
 	if (count == 0)
 	{
 		if (buf[0] == '-' || check_isnum(buf) || check_overflow(buf) || ft_atoi(buf) == 0)
@@ -43,8 +45,6 @@ int		check_valid(char *buf, int count)
 		ft_printf("ants count is ok\n");
 		return (0);
 	}
-	if (buf[0] == '#')
-		return (0);
 	words = count_words(buf);
 	if (words != 3 && words != 1)
 	{
