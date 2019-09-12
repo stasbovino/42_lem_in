@@ -6,7 +6,7 @@
 #    By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 23:35:25 by gwyman-m          #+#    #+#              #
-#    Updated: 2019/09/11 21:55:38 by gwyman-m         ###   ########.fr        #
+#    Updated: 2019/09/12 13:13:32 by gwyman-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,14 +39,15 @@ all: $(LEM_IN)
 
 $(LEM_IN): $(LIBFT) $(OBJ) $(HEADER)
 	@gcc $(FLAGS) $(OBJ) -o $(LEM_IN) $(LIB)
-	@echo "\n\033[0;32mlem-in is ready\033[0m"
+	@printf "\033[0;32mlem-in files are ready                        \033[0m\n"
+	@printf "\e[?25h\033[0;32mlem-in is ready\033[0m\n"
 
 $(LIBFT):
 	@make -C libft/
 
 src/%.o: %.c $(HEADER)
 	@gcc -c $(FLAGS) $< -o $@
-	@printf "\033[0;34mcompiling $<\033[0m\033\r"
+	@printf "\e[?25l\033[0;34mcompiling $<\033[0m\033\r"
 	@printf "                                 \r"
 
 clean:
