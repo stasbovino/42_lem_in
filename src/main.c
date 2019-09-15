@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/12 18:16:27 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 01:20:54 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(void)
 	i = -1;
 	size = 0;
 	input = read_input(&size);
-	ft_printf("%d\n", size);
+	ft_printf("size: %d\n", size);
 	if (input == NULL)
 	{
 		ft_printf("error\n");
@@ -94,7 +94,7 @@ int	main(void)
 	}
 	else
 	{
-		if (create_table(input))
+		if (create_table(input, size))
 		{
 			ft_printf("ERROR: invalid graph\n");
 		}
