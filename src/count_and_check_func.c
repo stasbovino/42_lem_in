@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:49:08 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 14:18:44 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 17:41:18 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,23 @@ int		count_words(char *buf)
 		i++;
 	}
 	return (k);
+}
+
+int		count_rooms(char **input, int size)
+{
+	int i;
+	int	count;
+	int	ret;
+
+	count = 0;
+	i = 0;
+	while (++i < size)
+	{
+		ret = find_no_room(input[i]);
+		if (ret == 1)
+			break ;
+		if (ret == 0)
+			count++;
+	}
+	return (count);
 }

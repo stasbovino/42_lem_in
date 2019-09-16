@@ -6,82 +6,12 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 17:12:53 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 17:50:10 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		find_no_room(char *s)
-{
-	int i;
-
-	i = -1;
-	if (s[0] == '#')
-		return (2);
-	while (s[++i])
-		if (s[i] == '-')
-			return (1);
-	return (0);
-}
-
-int		count_rooms(char **input, int size)
-{
-	int i;
-	int	count;
-	int	ret;
-
-	count = 0;
-	i = 0;
-	while (++i < size)
-	{
-		ret = find_no_room(input[i]);
-		if (ret == 1)
-			break ;
-		if (ret == 0)
-			count++;
-	}
-	return (count);
-}
-
-char	*get_first_word(char *input)
-{
-	int		i;
-	int		len;
-	char	*word;
-
-	len = 0;
-	while (input[len] != ' ')
-		len++;
-	word = (char*)malloc(sizeof(char) * (len + 1));
-	word[len] = '\0';
-	i = -1;
-	while (++i < len)
-		word[i] = input[i];
-	return (word);
-}
-
-char	*get_next_room_name(char **input, int size)
-{
-	static int	last = 0;
-	int			ret;
-
-	if (last == 0)
-	{
-		while (input[last][0] == '#' || count_words(input[last]) != 3)
-			last++;
-		last--;
-	}
-	while (++last < size)
-	{
-		ret = find_no_room(input[last]);
-		if (ret == 0)
-			return (get_first_word(input[last]));
-		if (ret == 1)
-			return (NULL);
-	}
-	return (NULL);
-}
 
 int		**init_int_table(char **table, int rooms)
 {
@@ -137,27 +67,21 @@ void	free_tables(int ***int_table, char ***table, int rooms)
 	int i;
 
 	i = -1;
-	while (++i < (rooms + 2))
-		free((*int_table)[i]);
-	free(*int_table);
-	i = -1;
-	while (++i < (rooms + 1))
-		free((*table)[i]);
-	free(*table);
+	if (int_table)
+	{
+		while (++i < (rooms + 2))
+			free((*int_table)[i]);
+		free(*int_table);
+		i = -1;
+	}
+	if (table)
+	{
+		while (++i < (rooms + 1))
+			free((*table)[i]);
+		free(*table);
+	}
 }
 
-int		find_no_link(char *s)
-{
-	int i;
-
-	i = -1;
-	if (s[0] == '#')
-		return (1);
-	while (s[++i])
-		if (s[i] == '-')
-			return (0);
-	return (1);
-}
 
 char	*get_next_link(char **input, int size)
 {
@@ -193,6 +117,42 @@ void	create_links(int ***int_table, char **table, char **input)
 	while (input[
 }
 */
+
+int		set_start_and_end(char **input, int size, char ***table)
+{
+	int i;
+	int	start;
+	int	end;
+
+	start = 0;
+	end = 0;
+	i = -1;
+	while (++i < size)
+	{
+		if (input[i][0] == '#' && input[i][1] == '#')
+		{
+			if (ft_strstr(input[i], "start"))
+			{
+				start++;
+				if (start == 2)
+					return (1);
+			}
+			else if (ft_strstr(input[i], "end"))
+			{
+				end++;
+				if (end == 2)
+					return (1);
+			}
+		}
+	}
+}
+
+int		error_graph(char ***table, int ***int_table, int rooms)
+{
+	free_tables(int_table, table, rooms);
+	return (1);
+}
+
 int		create_table(char **input, int size)
 {
 	int		rooms;
@@ -207,10 +167,10 @@ int		create_table(char **input, int size)
 	table = (char**)malloc(sizeof(char*) * (rooms + 1));
 	i = -1;
 	while (++i < rooms)
-	{
 		table[i] = get_next_room_name(input, size);
-	}
 	table[i] = NULL;
+	if (set_start_and_end(input, size, &table))
+		return (error_graph(&table, NULL, rooms));
 	i = -1;
 	ft_printf("ROOMS:\n");
 	while (++i < (rooms + 1))
