@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 18:34:21 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 21:39:26 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,36 +94,7 @@ void	create_links(int ***int_table, char **table, char **input)
 	while (input[
 }
 */
-/*
-int		set_start_and_end(char **input, int size, char ***table)
-{
-	int i;
-	int	start;
-	int	end;
 
-	start = 0;
-	end = 0;
-	i = -1;
-	while (++i < size)
-	{
-		if (input[i][0] == '#' && input[i][1] == '#')
-		{
-			if (ft_strstr(input[i], "start"))
-			{
-				start++;
-				if (start == 2)
-					return (1);
-			}
-			else if (ft_strstr(input[i], "end"))
-			{
-				end++;
-				if (end == 2)
-					return (1);
-			}
-		}
-	}
-}
-*/
 int		error_graph(char ***table, int ***int_table, int rooms)
 {
 	free_tables(int_table, table, rooms);
@@ -143,12 +114,12 @@ int		create_table(char **input, int size)
 		return (1);
 	table = (char**)malloc(sizeof(char*) * (rooms + 1));
 	i = -1;
-	while (++i < rooms)
-		table[i] = get_next_room_name(input, size);
+	table[0] = get_next_room_name(input, size, 0);
+	table[rooms - 1] = get_next_room_name(input, size, rooms - 1);
+	while (++i < rooms - 1)
+		table[i] = get_next_room_name(input, size, -1);
 	table[i] = NULL;
-/*	if (set_start_and_end(input, size, &table))
-		return (error_graph(&table, NULL, rooms));
-*/	i = -1;
+	i = -1;
 	ft_printf("ROOMS:\n");
 	while (++i < (rooms + 1))
 		ft_printf("%d. %s\n", i + 1, table[i]);

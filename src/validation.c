@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 14:20:17 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 21:13:04 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ int		check_link(char *buf)
 	return (0);
 }
 
-int		check_valid(char *buf, int count)
+int		check_valid(char **input, int count, char *buf, int useful)
 {
-	char	**split;
-	int		words;
+	char		**split;
+	int			words;
 
 	if (!buf || !*buf || buf[0] == ' ' || buf[0] == '-' || buf[0] == 'L')
 		return (1);
 	if (buf[0] == '#')
 		return (0);
-	if (count == 0)
+	if (useful == 0)
 	{
 		if (buf[0] == '-' || check_isnum(buf) || check_overflow(buf) || ft_atoi(buf) == 0)
 		{
@@ -58,7 +58,7 @@ int		check_valid(char *buf, int count)
 	}
 	split = (words == 3) ? ft_strsplit(buf, ' ') : ft_strsplit(buf, '-');
 	words = (words == 1) ? 2 : words;
-	if (check_split(&split, words))
+	if (check_split(input, count, &split, words))
 		return (1);
 	return (0);
 }

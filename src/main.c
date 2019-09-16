@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 16:55:22 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 21:41:58 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	**read_error(char ***input, int count, char **buf)
 	int i;
 
 	i = 0;
-	free(*buf);
+	if (buf)
+		free(*buf);
 	while (i < count)
 	{
 		free((*input)[i]);
@@ -42,6 +43,46 @@ char	**read_error(char ***input, int count, char **buf)
 	}
 	free(*input);
 	return (NULL);
+}
+
+int		check_start_and_end(char **input, int count)
+{
+	int i;
+	int	start;
+	int	end;
+
+	i = -1;
+	start = 0;
+	end = 0;
+	while (++i < count)
+	{
+		if (input[i][0] == '#' && input[i][1] == '#')
+		{
+			if (ft_strcmp(input[i], "##start"))
+			{
+				if (start == 1)
+					return (1);
+				while (input[i + 1] && input[i + 1][0] == '#')
+					i++;
+				if (!(input[i + 1] || ft_countwords(input[i + 1]) != 3))
+					return (1);
+				start++;
+			}
+			else if (ft_strcmp(input[i], "##end"))
+			{
+				if (end == 1)
+					return (1);
+				while (input[i + 1] && input[i + 1][0] == '#')
+					i++;
+				if (!(input[i + 1] || ft_countwords(input[i + 1]) != 3))
+					return (1);
+				end++;
+			}
+		}
+	}
+	if (start == 0 || end == 0)
+		return (1);
+	return (0);
 }
 
 char	**read_input(int *size)
@@ -63,7 +104,7 @@ char	**read_input(int *size)
 			return (read_error(&input, count, &buf));
 		if (buf && *buf && buf[0] != '#')
 			useful++;
-		if (check_valid(buf, useful))
+		if (check_valid(input, count, buf, useful))
 			return (read_error(&input, count, &buf));
 		input[count] = ft_strdup(buf);
 		free(buf);
@@ -71,6 +112,11 @@ char	**read_input(int *size)
 		count++;
 		if (count % 2 == 0)
 			input = re_init(&input, count);
+	}
+	if (check_start_and_end(input, count))
+	{
+		ft_printf("bad commands\n");
+		return (read_error(&input, count, NULL));
 	}
 	*size = count;
 	return (input);

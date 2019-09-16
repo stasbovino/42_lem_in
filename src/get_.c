@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 17:42:06 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 17:44:59 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 21:57:21 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ int		find_no_room(char *s)
 	i = -1;
 	if (s[0] == '#')
 		return (2);
+	if (count_words(s) != 3)
+		return (1);
 	while (s[++i])
+	{
 		if (s[i] == '-')
 			return (1);
+	}
 	return (0);
 }
 
@@ -42,16 +46,23 @@ char	*get_first_word(char *input)
 	return (word);
 }
 
-char	*get_next_room_name(char **input, int size)
+char	*get_next_room_name(char **input, int size, int opt)
 {
 	static int	last = 0;
 	int			ret;
+	int			tmp;
 
 	if (last == 0)
 	{
 		while (input[last][0] == '#' || count_words(input[last]) != 3)
 			last++;
 		last--;
+	}
+	if (opt == 0)
+	{
+		tmp = 0;
+		while (input[tmp] && ft_strcmp(input[tmp], "##start") != 0)
+			tmp++;
 	}
 	while (++last < size)
 	{
