@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 22:31:50 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 23:12:17 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,39 @@ void	free_tables(int ***int_table, char ***table, int rooms)
 	}
 }
 
-/*
-void	create_links(int ***int_table, char **table, char **input)
+void	create_links(int ***int_table, char **table, char **input, int size)
 {
-	int **tmp;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	int		a;
+	int		b;
+	char	**rooms;
 
-	tmp = *int_table;
-	i = -1;
-	j = -1;
-	while (input[
+	i = 0;
+	while (input[i][0] == '#' || !ft_strchr(input[i], '-'))
+		i++;
+	i--;
+	while (++i < size)
+	{
+		if (input[i][0] == '#')
+			continue ;
+		rooms = ft_strsplit(input[i], '-');
+		j = -1;
+		a = 0;
+		b = 0;
+		while (table[++j])
+		{
+			if (ft_strcmp(table[j], rooms[0]) == 0)
+				a = j + 1;
+			else if (ft_strcmp(table[j], rooms[1]) == 0)
+				b = j + 1;
+			if (a != 0 && b != 0)
+				break ;
+		}
+		(*int_table)[a][b] = 1;
+		(*int_table)[b][a] = 1;
+	}
 }
-*/
 
 int		error_graph(char ***table, int ***int_table, int rooms)
 {
@@ -125,7 +145,8 @@ int		create_table(char **input, int size)
 		ft_printf("%d. %s\n", i + 1, table[i]);
 	int_table = init_int_table(table, rooms);
 	print_tab(int_table, rooms);
-//	create_links(&int_table, table, input);
+	create_links(&int_table, table, input, size);
+	print_tab(int_table, rooms);
 	free_tables(&int_table, &table, rooms);
 	return (0);
 }

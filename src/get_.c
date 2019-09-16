@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 17:42:06 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 22:35:39 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 23:10:54 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*get_next_room_name(char **input, int size, int opt)
 	}
 	while (++last < size)
 	{
-		if (last == end)
+		if (last == start || last == end)
 			continue ;
 		ret = find_no_room(input[last]);
 		if (ret == 0)
