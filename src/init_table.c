@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 23:12:17 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/17 01:11:27 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ void	create_links(int ***int_table, char **table, char **input, int size)
 		}
 		(*int_table)[a][b] = 1;
 		(*int_table)[b][a] = 1;
+		free(rooms[0]);
+		free(rooms[1]);
+		free(rooms);
 	}
 }
 

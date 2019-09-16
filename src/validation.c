@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 21:13:04 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/17 01:26:20 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		check_valid(char **input, int count, char *buf, int useful)
 {
 	char		**split;
 	int			words;
+	static int	prev = 0;
 
 	if (!buf || !*buf || buf[0] == ' ' || buf[0] == '-' || buf[0] == 'L')
 		return (1);
@@ -46,11 +47,21 @@ int		check_valid(char **input, int count, char *buf, int useful)
 		return (0);
 	}
 	words = count_words(buf);
+	if (prev == 0)
+		prev = words;
 	if (words != 3 && words != 1)
 	{
 		ft_printf("wrong words:%d\n", words);
 		return (1);
 	}
+	ft_printf("words: %d prev: %d\n", words, prev);
+	if (words > prev)
+	{
+		ft_printf("wrong order\n");
+		return (1);
+	}
+	else
+		prev = words;
 	if (words == 1 && check_link(buf))
 	{
 		ft_printf("one word is not link\n");
