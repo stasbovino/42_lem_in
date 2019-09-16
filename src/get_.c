@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 17:42:06 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 21:57:21 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 22:35:39 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,39 @@ char	*get_next_room_name(char **input, int size, int opt)
 	static int	last = 0;
 	int			ret;
 	int			tmp;
+	static int	start = 0;
+	static int	end = 0;
 
 	if (last == 0)
 	{
-		while (input[last][0] == '#' || count_words(input[last]) != 3)
+		while (last < size && (input[last][0] == '#' || ft_countwords(input[last]) != 3))
 			last++;
 		last--;
 	}
 	if (opt == 0)
 	{
 		tmp = 0;
-		while (input[tmp] && ft_strcmp(input[tmp], "##start") != 0)
+		while (tmp < size && ft_strcmp(input[tmp], "##start") != 0)
 			tmp++;
+		while (tmp < size && (input[tmp][0] == '#' || ft_countwords(input[tmp]) != 3))
+			tmp++;
+		start = tmp;
+		return (get_first_word(input[tmp]));
+	}
+	else if (opt != -1)
+	{
+		tmp = 0;
+		while (tmp < size && ft_strcmp(input[tmp], "##end") != 0)
+			tmp++;
+		while (tmp < size && (input[tmp][0] == '#' || ft_countwords(input[tmp]) != 3))
+			tmp++;
+		end = tmp;
+		return (get_first_word(input[tmp]));
 	}
 	while (++last < size)
 	{
+		if (last == end)
+			continue ;
 		ret = find_no_room(input[last]);
 		if (ret == 0)
 			return (get_first_word(input[last]));

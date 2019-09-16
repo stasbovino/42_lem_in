@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 21:39:26 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 22:31:50 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,12 @@ int		create_table(char **input, int size)
 	if (rooms == 0)
 		return (1);
 	table = (char**)malloc(sizeof(char*) * (rooms + 1));
-	i = -1;
+	i = 0;
 	table[0] = get_next_room_name(input, size, 0);
 	table[rooms - 1] = get_next_room_name(input, size, rooms - 1);
 	while (++i < rooms - 1)
 		table[i] = get_next_room_name(input, size, -1);
-	table[i] = NULL;
+	table[i + 1] = NULL;
 	i = -1;
 	ft_printf("ROOMS:\n");
 	while (++i < (rooms + 1))
