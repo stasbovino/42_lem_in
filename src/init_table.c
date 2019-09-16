@@ -6,12 +6,11 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 17:50:10 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 18:34:21 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
 
 int		**init_int_table(char **table, int rooms)
 {
@@ -82,28 +81,6 @@ void	free_tables(int ***int_table, char ***table, int rooms)
 	}
 }
 
-
-char	*get_next_link(char **input, int size)
-{
-	static int	last = 0;
-	int			ret;
-
-	if (last == 0)
-	{
-		while (find_no_link(input[last]))
-			last++;
-		last--;
-	}
-	while (++last < size)
-	{
-		ret = find_no_link(input[last]);
-		if (ret == 0)
-			return (input[last]);
-		if (ret == 1)
-			return (NULL);
-	}
-	return (NULL);
-}
 /*
 void	create_links(int ***int_table, char **table, char **input)
 {
@@ -117,7 +94,7 @@ void	create_links(int ***int_table, char **table, char **input)
 	while (input[
 }
 */
-
+/*
 int		set_start_and_end(char **input, int size, char ***table)
 {
 	int i;
@@ -146,7 +123,7 @@ int		set_start_and_end(char **input, int size, char ***table)
 		}
 	}
 }
-
+*/
 int		error_graph(char ***table, int ***int_table, int rooms)
 {
 	free_tables(int_table, table, rooms);
@@ -169,9 +146,9 @@ int		create_table(char **input, int size)
 	while (++i < rooms)
 		table[i] = get_next_room_name(input, size);
 	table[i] = NULL;
-	if (set_start_and_end(input, size, &table))
+/*	if (set_start_and_end(input, size, &table))
 		return (error_graph(&table, NULL, rooms));
-	i = -1;
+*/	i = -1;
 	ft_printf("ROOMS:\n");
 	while (++i < (rooms + 1))
 		ft_printf("%d. %s\n", i + 1, table[i]);
