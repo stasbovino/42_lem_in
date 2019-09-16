@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/12 13:26:41 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/16 14:20:17 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		check_valid(char *buf, int count)
 	char	**split;
 	int		words;
 
-	if (!buf || !*buf)
+	if (!buf || !*buf || buf[0] == ' ' || buf[0] == '-' || buf[0] == 'L')
 		return (1);
 	if (buf[0] == '#')
 		return (0);
