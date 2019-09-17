@@ -6,11 +6,25 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:49:08 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 17:41:18 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/17 20:12:36 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+int		check_link(char *buf)
+{
+	int	pos;
+	int count;
+
+	pos = ft_strchrpos(buf, '-');
+	count = ft_countchars(buf, '-');
+	if (count != 1)
+		return (1);
+	if (pos == 0 || (pos == (int)(ft_strlen(buf) - 1)))
+		return (1);
+	return (0);
+}
 
 int		check_isnum(char *num)
 {

@@ -6,7 +6,7 @@
 #    By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 23:35:25 by gwyman-m          #+#    #+#              #
-#    Updated: 2019/09/16 17:48:38 by gwyman-m         ###   ########.fr        #
+#    Updated: 2019/09/17 20:16:44 by gwyman-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC_DIR= src/
 HEADER=	lem_in.h
 
 CFILES= main.c count_and_check_func.c valid_split.c validation.c init_table.c \
-		get_.c
+		get_.c find_no_.c compare.c free.c print.c create_links.c read.c \
+		check_start_and_end.c
 
 OFILES= $(CFILES:%.c=%.o)
 
