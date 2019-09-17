@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:46:32 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 19:39:26 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/17 22:03:50 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int		check_split(char **input, int count, char ***split, int words)
 	if (words == 3)
 	{
 		i = 0;
-		if ((*split)[0][0] == 'L')
-			return (free_split(split, words, 1));
 		while (++i < 3)
 			if (check_isnum((*split)[i]) || check_overflow((*split)[i]))
 				return (free_split(split, words, 1));

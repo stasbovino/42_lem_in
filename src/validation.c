@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 19:51:36 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/17 21:48:29 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int			check_valid(char **input, int count, char *buf, int useful)
 	int			words;
 	static int	prev = 0;
 
-	if (detect_bad_symbols(buf))
-		return (1);
 	if (buf[0] == '#')
 		return (0);
+	if (detect_bad_symbols(buf))
+		return (1);
 	if (useful == 0)
 		return (check_ants(buf));
 	words = count_words(buf);
