@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 22:15:35 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/17 18:57:23 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,24 @@
 
 # include "libft.h"
 
+typedef struct			s_graph
+{
+	int					rooms;
+	int					ants;
+	int					**table;
+	char				**list;
+	int					x;
+	int					y;
+	int					**path;
+}						t_graph;
+
+void		print_tab(int **int_table, int rooms);
+void		print_graph(t_graph *graph);
+
 char		**read_input(int *size);
 char		**re_init(char ***input, int count);
 
-int			create_table(char **input, int size);
+t_graph		*create_table(char **input, int size);
 
 int			check_link(char *buf);
 int			check_valid(char **input, int count, char *buf, int useful);

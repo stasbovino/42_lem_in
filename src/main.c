@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 17:44:32 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/17 19:01:32 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,19 @@ char	**read_input(int *size)
 	return (input);
 }
 
+void	print_graph(t_graph *graph)
+{
+	ft_printf("rooms are: %d\n", graph->rooms);
+	ft_printf("ants are: %d\n", graph->ants);
+	print_tab(graph->table, graph->rooms);
+}
+
 int	main(void)
 {
 	char	**input;
 	int		size;
 	int		i;
+	t_graph *graph;
 
 	i = -1;
 	size = 0;
@@ -153,16 +161,21 @@ int	main(void)
 			ft_printf("%s\n", input[i]);
 		}
 		i = -1;
-		if (create_table(input, size))
+		if (!(graph = create_table(input, size)))
 		{
 			ft_printf("ERROR: invalid graph\n");
 		}
-		while (++i < size)
+		print_graph(graph);
+/*
+ **		PLACE FOR KEK
+ */
+
+/*		while (++i < size)
 		{
 			free(input[i]);
 		}
 		free(input);
 		get_next_line(0, NULL, 1);
-	}
+*/	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 01:11:27 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/17 18:53:54 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,23 +118,34 @@ void	create_links(int ***int_table, char **table, char **input, int size)
 	}
 }
 
+int		get_ants_num(char **input, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size && input[i][0] == '#')
+		i++;
+	return (ft_atoi(input[i]));
+}
+
 int		error_graph(char ***table, int ***int_table, int rooms)
 {
 	free_tables(int_table, table, rooms);
 	return (1);
 }
 
-int		create_table(char **input, int size)
+t_graph		*create_table(char **input, int size)
 {
 	int		rooms;
 	char	**table;
 	int		**int_table;
 	int		i;
+	t_graph	*graph;
 
 	rooms = count_rooms(input, size);
 	ft_printf("rooms: %d\n", rooms);
 	if (rooms == 0)
-		return (1);
+		return (NULL);
 	table = (char**)malloc(sizeof(char*) * (rooms + 1));
 	i = 0;
 	table[0] = get_next_room_name(input, size, 0);
@@ -150,6 +161,13 @@ int		create_table(char **input, int size)
 	print_tab(int_table, rooms);
 	create_links(&int_table, table, input, size);
 	print_tab(int_table, rooms);
-	free_tables(&int_table, &table, rooms);
-	return (0);
+	graph = (t_graph*)malloc(sizeof(t_graph));
+	graph->rooms = rooms;
+	graph->ants = get_ants_num(input, size);
+	graph->table = int_table;
+	graph->list = table;
+	graph->x = 0;
+	graph->y = 0;
+//	free_tables(&int_table, &table, rooms);
+	return (graph);
 }
