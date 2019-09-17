@@ -1,8 +1,7 @@
 12
 ##start
 a 2 3
-b 4 2
-a-b
+
 ##end
-c 1 2
-b-c
+b 3 4
+a-b

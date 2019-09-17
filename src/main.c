@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/16 21:41:58 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/17 17:44:32 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,30 +58,35 @@ int		check_start_and_end(char **input, int count)
 	{
 		if (input[i][0] == '#' && input[i][1] == '#')
 		{
-			if (ft_strcmp(input[i], "##start"))
+			if (ft_strcmp(input[i], "##start") == 0)
 			{
 				if (start == 1)
+				{
+					ft_printf("two starts\n");
 					return (1);
-				while (input[i + 1] && input[i + 1][0] == '#')
-					i++;
-				if (!(input[i + 1] || ft_countwords(input[i + 1]) != 3))
+				}
+				if (((i + 1) == count || input[i + 1][0] == '#' || ft_countwords(input[i + 1]) != 3))
 					return (1);
 				start++;
 			}
-			else if (ft_strcmp(input[i], "##end"))
+			else if (ft_strcmp(input[i], "##end") == 0)
 			{
 				if (end == 1)
+				{
+					ft_printf("two ends\n");
 					return (1);
-				while (input[i + 1] && input[i + 1][0] == '#')
-					i++;
-				if (!(input[i + 1] || ft_countwords(input[i + 1]) != 3))
+				}
+				if (((i + 1) == count || input[i + 1][0] == '#' || ft_countwords(input[i + 1]) != 3))
 					return (1);
 				end++;
 			}
 		}
 	}
 	if (start == 0 || end == 0)
+	{
+		ft_printf("no start or no end\n");
 		return (1);
+	}
 	return (0);
 }
 
@@ -100,9 +105,12 @@ char	**read_input(int *size)
 	input = (char**)malloc(sizeof(char*) * 2);
 	while ((r = get_next_line(0, &buf, 0)))
 	{
-		if (r == -1)
+		if (r == -1 || !buf || !*buf)
+		{
+			ft_printf("invalid read\n");
 			return (read_error(&input, count, &buf));
-		if (buf && *buf && buf[0] != '#')
+		}
+		if (buf[0] != '#')
 			useful++;
 		if (check_valid(input, count, buf, useful))
 			return (read_error(&input, count, &buf));

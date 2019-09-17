@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 01:26:20 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/17 18:32:23 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,41 @@ int		check_link(char *buf)
 		return (1);
 	return (0);
 }
+/*
+int		detect_bad_symbols(char *s)
+{
+	int i;
+	int	spaces;
+	int	links;
 
+	i = -1;
+	spaces = ft_countchars(s, ' ');
+	links = ft_countchars(s' '-');
+	if (links != 0 && spaces != 0)
+	{
+		ft_printf("нормальный ввод плс, извращенец\n");
+		return (1);
+	}
+	if (links != 0 && links != 1)
+	{
+		ft_printf("bad minuses\n");
+		return (1);
+	}
+	if (spaces != 0 && spaces != 2)
+	{
+		ft_printf("bad spaces\n");
+		return (1);
+	}
+	return (0);
+}
+*/
 int		check_valid(char **input, int count, char *buf, int useful)
 {
 	char		**split;
 	int			words;
 	static int	prev = 0;
 
-	if (!buf || !*buf || buf[0] == ' ' || buf[0] == '-' || buf[0] == 'L')
+	if (buf[0] == ' ' || buf[0] == '-' || buf[0] == 'L')
 		return (1);
 	if (buf[0] == '#')
 		return (0);
