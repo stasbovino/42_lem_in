@@ -6,7 +6,11 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 20:12:16 by gwyman-m         ###   ########.fr       */
+<<<<<<< Updated upstream
+/*   Updated: 2019/09/17 21:22:44 by tiyellow         ###   ########.fr       */
+=======
+/*   Updated: 2019/09/17 21:12:53 by tiyellow         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +67,8 @@ static t_graph	*init_graph(char **table, int **int_table, int rooms, int ants)
 	graph->table = int_table;
 	graph->list = table;
 	graph->x = 0;
-	graph->y = 0;
+	graph->path = NULL;
+	graph->paths = NULL;
 	return (graph);
 }
 
@@ -87,6 +92,17 @@ t_graph			*create_table(char **input, int size)
 	table[i + 1] = NULL;
 	int_table = init_int_table(rooms);
 	create_links(&int_table, table, input, size);
+<<<<<<< Updated upstream
 	graph = init_graph(table, int_table, rooms, get_ants_num(input, size));
+=======
+	print_tab(int_table, rooms);
+	graph = (t_graph*)malloc(sizeof(t_graph));
+	graph->rooms = rooms;
+	graph->ants = get_ants_num(input, size);
+	graph->table = int_table;
+	graph->list = table;
+	graph->x = 0;
+//	free_tables(&int_table, &table, rooms);
+>>>>>>> Stashed changes
 	return (graph);
 }
