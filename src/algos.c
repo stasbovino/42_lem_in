@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/09/18 23:07:37 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/19 01:23:19 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,11 @@ void		init_alg(t_graph **abs_graph)
   */
 	ft_printf("SOLUTION:\n");
 	if (shortest)
+	{
 		print_path(shortest, graph->rooms);
+		free(shortest);
+	}
 	else
 		ft_printf("\x1b[31mno path\n\x1b[0m");
 //	dijkstra(&graph, path, 0, 1);
-	free(path);
 }

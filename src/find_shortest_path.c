@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 22:39:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/18 23:04:45 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/19 01:20:35 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ int			fill_queue(int **queue, int ***table, int *path, int rooms)
 	return (0);
 }
 
+void		find_sp_free(int ***table, int rooms, int **path, int **queue)
+{
+	if (queue)
+		free(*queue);
+	free(*path);
+	free_tables(table, NULL, rooms);
+}
+
 void		find_shortest_path(int **table, int rooms, int *path, int **shortest)
 {
 	int *queue;
@@ -47,6 +55,7 @@ void		find_shortest_path(int **table, int rooms, int *path, int **shortest)
 		{
 			*shortest = dup_path(path, rooms);
 //			ft_printf("\x1b[32mfirst shortest!\x1b[0m\n");
+			find_sp_free(&table, rooms, &path, NULL);
 			return ;
 		}
 		if (*shortest)
@@ -55,6 +64,7 @@ void		find_shortest_path(int **table, int rooms, int *path, int **shortest)
 			if ((*shortest)[0] <= path[0])
 			{
 //				ft_printf("\x1b[31mpath is bigger that shortest\x1b[0m\n");
+				find_sp_free(&table, rooms, &path, NULL);
 				return ;
 			}
 			else
@@ -62,6 +72,7 @@ void		find_shortest_path(int **table, int rooms, int *path, int **shortest)
 //				ft_printf("\x1b[32mnew shortest!\x1b[0m\n");
 				free(*shortest);
 				*shortest = dup_path(path, rooms);
+				find_sp_free(&table, rooms, &path, NULL);
 				return ;
 			}
 		}
@@ -71,6 +82,7 @@ void		find_shortest_path(int **table, int rooms, int *path, int **shortest)
 */	init_path(&queue, rooms);
 	if (fill_queue(&queue, &table, path, rooms))
 	{
+		find_sp_free(&table, rooms, &path, &queue);
 //		ft_printf("no links\n");
 		return ;
 	}
@@ -87,4 +99,5 @@ void		find_shortest_path(int **table, int rooms, int *path, int **shortest)
 		print_path(path, rooms);
 */		find_shortest_path(tab_dup(table, rooms), rooms, dup_path(path, rooms), shortest);
 	}
+	find_sp_free(&table, rooms, &path, &queue);
 }
