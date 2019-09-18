@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/09/18 23:05:47 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/18 23:07:37 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void		init_alg(t_graph **abs_graph)
 	find_shortest_path(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
  /*
   *	решение в shortest лежит
+  *	если решения нет то NULL
   */
 	ft_printf("SOLUTION:\n");
 	if (shortest)
