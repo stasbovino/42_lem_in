@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 22:50:14 by tiyellow         ###   ########.fr       */
+/*   Updated: 2019/09/18 03:08:37 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define LEM_IN_H
 
 # include "libft.h"
+
+# define SIZE 4000
 
 typedef struct	s_graph
 {
@@ -33,19 +35,23 @@ char			**read_input(int *size);
 
 t_graph			*create_table(char **input, int size);
 
+int				check_split(char **input, int count, char ***split, int words);
 int				check_start_and_end(char **input, int count);
 int				check_link(char *buf);
 int				check_valid(char **input, int count, char *buf, int useful);
+
 int				check_isnum(char *num);
 int				check_overflow(char *num);
 int				count_words(char *buf);
 int				count_rooms(char **input, int size);
-int				check_split(char **input, int count, char ***split, int words);
 
 void			create_links(int ***int_table, char **table,
 		char **input, int size);
 
 int				free_split(char ***split, int words, int ret);
+void			free_tables(int ***int_table, char ***table, int rooms);
+void			free_input(char ***input, int size);
+void			free_graph(t_graph **graph);
 
 int				find_no_room(char *s);
 int				find_no_link(char *s);

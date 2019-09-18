@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 22:43:34 by tiyellow         ###   ########.fr       */
+/*   Updated: 2019/09/18 02:40:54 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,16 @@ int	main(void)
 /*
  **		COOL PLACE FOR KEK
  */
-		init_alg(&graph);
+//		init_alg(&graph);
 /*		while (++i < size)
 		{
 			free(input[i]);
 		}
 		free(input);
+*/
 		get_next_line(0, NULL, 1);
-*/	}
+		free_input(&input, size);
+		free_graph(&graph);
+	}
 	return (0);
 }

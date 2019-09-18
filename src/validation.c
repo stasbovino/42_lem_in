@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 21:48:29 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/18 02:00:11 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 static int	detect_bad_symbols(char *s)
 {
-	int i;
 	int	spaces;
 	int	links;
 
-	i = -1;
 	spaces = ft_countchars(s, ' ');
 	links = ft_countchars(s, '-');
 	if (s[0] == 'L')

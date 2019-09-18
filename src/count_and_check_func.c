@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:49:08 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 22:46:47 by tiyellow         ###   ########.fr       */
+/*   Updated: 2019/09/18 02:59:07 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,27 @@
 
 int		check_link(char *buf)
 {
-	int	pos;
+	int	i;
+	int	before;
+	int	after;
+	int	link;
 
-	pos = ft_strchrpos(buf, '-');
-	if (pos == 0 || (pos == (int)(ft_strlen(buf) - 1)))
+	i = -1;
+	before = 0;
+	after = 0;
+	link = 0;
+	while (buf[++i])
+	{
+		if (buf[i] == '-' && link == 0)
+			link++;
+		else if (buf[i] == '-' && link != 0)
+			return (1);
+		else if (buf[i] != '-' && link == 0)
+			before++;
+		else if (buf[i] != '-' && link == 1)
+			after++;
+	}
+	if (!after || !before)
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 20:15:30 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 22:48:53 by tiyellow         ###   ########.fr       */
+/*   Updated: 2019/09/18 03:05:59 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	**re_init(char ***input, int count)
 	int		i;
 
 	i = 0;
-	tmp = (char**)malloc(sizeof(char*) * (count + 2));
+	tmp = (char**)malloc(sizeof(char*) * (count + SIZE));
 	while (i < count)
 	{
 		tmp[i] = ft_strdup((*input)[i]);
@@ -63,7 +63,8 @@ char		**read_input(int *size)
 
 	useful = -1;
 	count = 0;
-	input = (char**)malloc(sizeof(char*) * 2);
+	buf = NULL;
+	input = (char**)malloc(sizeof(char*) * SIZE);
 	while ((r = get_next_line(0, &buf, 0)))
 	{
 		if (r == -1 || !buf || !*buf)
@@ -73,7 +74,7 @@ char		**read_input(int *size)
 		if (check_valid(input, count, buf, useful))
 			return (read_error(&input, count, &buf));
 		write_to_arr(&input, &count, &buf);
-		if (count % 2 == 0)
+		if (count % SIZE == 0)
 			input = re_init(&input, count);
 	}
 	if (check_start_and_end(input, count))
