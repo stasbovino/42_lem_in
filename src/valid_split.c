@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:46:32 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 22:03:50 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/18 16:53:45 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		check_split(char **input, int count, char ***split, int words)
 	{
 		i = -1;
 		while (++i < 2)
-			if ((*split)[i][0] == 'L')
+			if ((*split)[i][0] == 'L' || (*split)[i][0] == '#')
 				return (free_split(split, words, 1));
 		if (check_exist_room(input, count, *split))
 			return (free_split(split, words, 1));

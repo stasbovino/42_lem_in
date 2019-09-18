@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/18 02:00:11 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/18 16:31:29 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	detect_bad_symbols(char *s)
 	links = ft_countchars(s, '-');
 	if (s[0] == 'L')
 		return (1);
-	if (links != 0 && spaces != 0)
+	if ((links != 0 && spaces != 0) || (links == 0 && spaces == 0))
 		return (1);
 	if (links != 0 && links != 1)
 		return (1);
@@ -30,7 +30,7 @@ static int	detect_bad_symbols(char *s)
 	return (0);
 }
 
-static int	check_ants(char *buf)
+int			check_ants(char *buf)
 {
 	if (buf[0] == '-' || check_isnum(buf)
 			|| check_overflow(buf) || ft_atoi(buf) == 0)
@@ -61,10 +61,10 @@ int			check_valid(char **input, int count, char *buf, int useful)
 
 	if (buf[0] == '#')
 		return (0);
-	if (detect_bad_symbols(buf))
-		return (1);
 	if (useful == 0)
 		return (check_ants(buf));
+	if (detect_bad_symbols(buf))
+		return (1);
 	words = count_words(buf);
 	if (check_words(buf, words, &prev))
 		return (1);

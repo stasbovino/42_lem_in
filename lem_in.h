@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/18 03:08:37 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/18 15:06:31 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int				check_split(char **input, int count, char ***split, int words);
 int				check_start_and_end(char **input, int count);
 int				check_link(char *buf);
 int				check_valid(char **input, int count, char *buf, int useful);
+int				check_ants(char *buf);
 
 int				check_isnum(char *num);
 int				check_overflow(char *num);

@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:49:08 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/18 02:59:07 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/18 16:57:25 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ int		check_link(char *buf)
 	link = 0;
 	while (buf[++i])
 	{
-		if (buf[i] == '-' && link == 0)
+		if (buf[i] == '-')
 			link++;
-		else if (buf[i] == '-' && link != 0)
-			return (1);
 		else if (buf[i] != '-' && link == 0)
 			before++;
 		else if (buf[i] != '-' && link == 1)
@@ -117,6 +115,8 @@ int		count_rooms(char **input, int size)
 
 	count = 0;
 	i = 0;
+	while (i < size && input[i][0] == '#')
+		i++;
 	while (++i < size)
 	{
 		ret = find_no_room(input[i]);

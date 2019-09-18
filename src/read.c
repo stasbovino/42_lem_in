@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 20:15:30 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/18 03:05:59 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/18 14:42:02 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ char		**read_input(int *size)
 	{
 		if (r == -1 || !buf || !*buf)
 			return (read_error(&input, count, &buf));
-		if (buf[0] != '#')
-			useful++;
+		useful += (buf[0] != '#') ? 1 : 0;
 		if (check_valid(input, count, buf, useful))
 			return (read_error(&input, count, &buf));
 		write_to_arr(&input, &count, &buf);
