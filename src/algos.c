@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/09/17 22:42:11 by tiyellow         ###   ########.fr       */
+/*   Updated: 2019/09/18 23:05:47 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void		realloc_paths(t_grath **grath, int plus, int flag)
 	(*grath)->paths = newpath;
 }
 */
+/*
 void		dijkstra(t_graph **graph, int *path, int longer, int node)
 {
 	int		i;
@@ -92,25 +93,35 @@ void		dijkstra(t_graph **graph, int *path, int longer, int node)
 //	path[path[0]] = 0;
 	return ;
 }
+*/
 
 void		init_alg(t_graph **abs_graph)
 {
-	int			i;
-	int			*path;
 	t_graph		*graph;
+	int			*path;
+	int			*shortest;
 
+	shortest = NULL;
 	graph = *abs_graph;
-	path = (int*)malloc(sizeof(int) * graph->rooms + 1);
-	i = -1;
-	while (++i < graph->rooms + 1)
-		path[i] = 0;
-	i = -1;
-	while (++i < graph->rooms + 1)
-		ft_printf("%d ", path[i]);
-	ft_printf("\n");
-	dijkstra(&graph, path, 0, 1);
-	i = -1;
-	while (++i < graph->rooms + 1)
-		ft_printf("%d ", path[i]);
+	init_path(&path, graph->rooms);
+	path[0] = 1;
+	path[1] = 1;
+ /*
+ *	моя дикстра
+ *	еще я добавила функции
+ *	print_path(int *path, int rooms)
+ *	init_path(int **path, int rooms)
+ *	юзай на здоровье как г-рится
+ */
+	find_shortest_path(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
+ /*
+  *	решение в shortest лежит
+  */
+	ft_printf("SOLUTION:\n");
+	if (shortest)
+		print_path(shortest, graph->rooms);
+	else
+		ft_printf("\x1b[31mno path\n\x1b[0m");
+//	dijkstra(&graph, path, 0, 1);
 	free(path);
 }

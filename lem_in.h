@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/18 15:06:31 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/18 23:02:55 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,20 @@ typedef struct	s_graph
 
 void			print_tab(int **int_table, int rooms);
 void			print_graph(t_graph *graph);
+void			print_path(int *path, int rooms);
+void			print_queue(int *queue);
+
+int				**tab_dup(int **table, int rooms);
+int				*dup_path(int *path, int rooms);
+
+void			find_shortest_path(int **table, int rooms, int *path, int **shortest);
+
+void			init_path(int **path, int rooms);
 
 char			**read_input(int *size);
 
 t_graph			*create_table(char **input, int size);
+int				**allocate_table(int rooms);
 
 int				check_split(char **input, int count, char ***split, int words);
 int				check_start_and_end(char **input, int count);
@@ -56,6 +66,7 @@ void			free_graph(t_graph **graph);
 
 int				find_no_room(char *s);
 int				find_no_link(char *s);
+
 char			*get_first_word(char *input);
 char			*get_next_room_name(char **input, int size, int opt);
 char			*get_next_link(char **input, int size);

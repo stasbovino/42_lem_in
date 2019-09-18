@@ -6,13 +6,13 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 22:46:32 by tiyellow         ###   ########.fr       */
+/*   Updated: 2019/09/18 18:49:58 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int		**allocate_table(int rooms)
+int				**allocate_table(int rooms)
 {
 	int	**int_table;
 	int	i;

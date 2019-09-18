@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/18 14:43:08 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/18 18:50:39 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(void)
 			ft_printf("ERROR: invalid graph\n");
 		}
 		print_graph(graph);
-//		init_alg(&graph);
+		init_alg(&graph);
 		get_next_line(0, NULL, 1);
 		free_input(&input, size);
 		free_graph(&graph);
