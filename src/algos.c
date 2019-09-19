@@ -95,6 +95,28 @@ void		dijkstra(t_graph **graph, int *path, int longer, int node)
 }
 */
 
+void		node_chomper(t_graph **graph, int **path)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (*path && (*path)[++i] && (*path)[i] != (*graph)->rooms)
+	{
+		j = 0;
+		while(++j <= (*graph)->rooms)
+		{
+			if ((*graph)->table[(*path)[i]][j])
+			{
+				(*graph)->table[(*path)[i]][j] = 0;
+				(*graph)->table[j][(*path)[i]] = 0;
+			}
+		}
+		(*path)[i] = 0;
+
+	}
+}
+
 void		init_alg(t_graph **abs_graph)
 {
 	t_graph		*graph;
@@ -113,7 +135,7 @@ void		init_alg(t_graph **abs_graph)
  *	init_path(int **path, int rooms)
  *	юзай на здоровье как г-рится
  */
-	find_shortest_path(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
+	find_sp(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
  /*
   *	решение в shortest лежит
   *	если решения нет то NULL
@@ -126,5 +148,7 @@ void		init_alg(t_graph **abs_graph)
 	}
 	else
 		ft_printf("\x1b[31mno path\n\x1b[0m");
+	node_chomper(&graph, &shortest);
+	print_tab(graph->table, graph->rooms);
 //	dijkstra(&graph, path, 0, 1);
 }
