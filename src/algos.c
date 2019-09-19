@@ -146,41 +146,44 @@ void		node_chomper(t_graph **graph, int **path)
 void		init_alg(t_graph **abs_graph)
 {
 	t_graph		*graph;
-	int			*path;
-	int			*shortest;
+	int		*path;
+	int		*shortest;
 
-	shortest = NULL;
+
+
 	graph = *abs_graph;
-	init_path(&path, graph->rooms);
- /*
-  *ищу первый путь
-  */
- 
+	shortest = NULL;
+	init_path(&path, graph->rooms); 
 	find_sp(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
-//	free(path);
-	ft_printf("SOLUTION:\n");
+/*	ft_printf("SOLUTION:\n");
 	if (shortest)
 	{
 		print_path(shortest);
-//		free(shortest);
 	}
 	else
-		ft_printf("\x1b[31mno path\n\x1b[0m");
-	node_chomper(&graph, &shortest);
-//зануляю ноды пути и сам путь^
-	print_tab(graph->table, graph->rooms);
-	init_path(&path, graph->rooms);
-//пытаюсь инициализировать path^
-	find_sp(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
-//ищу новый путь в зануленном тейбле
+		ft_printf("\x1b[31mno path\n\x1b[0m");*/
+	while (shortest != NULL)
+	{
+		add_path(&graph, &shortest);
+/*		if (!(graph->paths[1][0] == 1))
+		{
+			if () //тут костыль для того чтобы проверить, нужны нам вообще смежные пути или нет i.e. если смежный путь длинее самого короткого и у нас мало муравьев то проще их пустить по самому короткому
+		}*/
+		node_chomper(&graph, &shortest);
+		print_tab(graph->table, graph->rooms);
+//		print_path(shortest);
+		shortest = NULL;
+		init_path(&path, graph->rooms);
+		find_sp(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
+	}
 	ft_printf("SOLUTION:\n");
+	print_paths(graph->paths);
+/*
 	if (shortest)
 	{
 		print_path(shortest);
 		free(shortest);
 	}
 	else
-		ft_printf("\x1b[31mno path\n\x1b[0m");
-
-//	dijkstra(&graph, path, 0, 1);
+		ft_printf("\x1b[31mno path\n\x1b[0m");*/
 }
