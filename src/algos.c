@@ -94,7 +94,7 @@ void		dijkstra(t_graph **graph, int *path, int longer, int node)
 	return ;
 }
 */
-
+/*
 void		add_path(t_graph **graph, int **path)
 {
 	int	**ret;
@@ -119,7 +119,7 @@ void		add_path(t_graph **graph, int **path)
 	while (++i < (*graph)->rooms + 1)
 		ret[j][i] = 0;
 }
-
+*/
 void		node_chomper(t_graph **graph, int **path)
 {
 	int	i;
@@ -138,7 +138,6 @@ void		node_chomper(t_graph **graph, int **path)
 			}
 		}
 		(*path)[i] = 0;
-
 	}
 }
 
@@ -168,7 +167,7 @@ void		init_alg(t_graph **abs_graph)
 	ft_printf("SOLUTION:\n");
 	if (shortest)
 	{
-		print_path(shortest, graph->rooms);
+		print_path(shortest);
 		free(shortest);
 	}
 	else
