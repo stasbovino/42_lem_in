@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 19:52:18 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 01:15:36 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/19 17:07:41 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_graph(t_graph *graph)
 	print_tab(graph->table, graph->rooms);
 }
 
-void		print_path(int *path, int rooms)
+void	print_path(int *path, int rooms)
 {
 	int i;
 
@@ -51,7 +51,7 @@ void		print_path(int *path, int rooms)
 	ft_printf("\n");
 }
 
-void		print_queue(int *queue)
+void	print_queue(int *queue)
 {
 	int i;
 

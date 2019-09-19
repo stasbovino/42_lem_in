@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/18 23:02:55 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:59:11 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			print_queue(int *queue);
 int				**tab_dup(int **table, int rooms);
 int				*dup_path(int *path, int rooms);
 
-void			find_shortest_path(int **table, int rooms, int *path, int **shortest);
+int				find_sp(int **table, int rooms, int *path, int **shortest);
 
 void			init_path(int **path, int rooms);
 

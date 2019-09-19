@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 22:39:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 01:20:35 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/19 17:07:13 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int			fill_queue(int **queue, int ***table, int *path, int rooms)
 	i = -1;
 	j = 0;
 	links = 0;
+	(*queue)[0] = 0;
+	(*queue)[1] = 0;
 	node = path[path[0]];
 	while (++j < (rooms + 2))
 		if ((*table)[node][j] == 1)
@@ -36,15 +38,22 @@ int			fill_queue(int **queue, int ***table, int *path, int rooms)
 	return (0);
 }
 
-void		find_sp_free(int ***table, int rooms, int **path, int **queue)
+static int	find_sp_free(int ***table, int rooms, int **path, int **queue)
 {
 	if (queue)
 		free(*queue);
 	free(*path);
 	free_tables(table, NULL, rooms);
+	return (1);
 }
 
-void		find_shortest_path(int **table, int rooms, int *path, int **shortest)
+static void	free_and_dup(int **shortest, int *path, int rooms)
+{
+	free(*shortest);
+	*shortest = dup_path(path, rooms);
+}
+
+int			find_sp(int **table, int rooms, int *path, int **shortest)
 {
 	int *queue;
 	int	nodes;
@@ -52,52 +61,23 @@ void		find_shortest_path(int **table, int rooms, int *path, int **shortest)
 	if (path[path[0]] == rooms)
 	{
 		if (!*shortest)
-		{
 			*shortest = dup_path(path, rooms);
-//			ft_printf("\x1b[32mfirst shortest!\x1b[0m\n");
-			find_sp_free(&table, rooms, &path, NULL);
-			return ;
-		}
-		if (*shortest)
-		{
-			//free's
-			if ((*shortest)[0] <= path[0])
-			{
-//				ft_printf("\x1b[31mpath is bigger that shortest\x1b[0m\n");
-				find_sp_free(&table, rooms, &path, NULL);
-				return ;
-			}
-			else
-			{
-//				ft_printf("\x1b[32mnew shortest!\x1b[0m\n");
-				free(*shortest);
-				*shortest = dup_path(path, rooms);
-				find_sp_free(&table, rooms, &path, NULL);
-				return ;
-			}
-		}
+		else if (path[0] < (*shortest)[0])
+			free_and_dup(shortest, path, rooms);
+		return (find_sp_free(&table, rooms, &path, NULL));
 	}
-/*	ft_printf("\nBEGIN %d\n", path[path[0]]);
-	print_tab(table, rooms);
-*/	init_path(&queue, rooms);
+	if (*shortest)
+		if (path[0] >= (*shortest)[0])
+			return (find_sp_free(&table, rooms, &path, NULL));
+	init_path(&queue, rooms);
 	if (fill_queue(&queue, &table, path, rooms))
-	{
-		find_sp_free(&table, rooms, &path, &queue);
-//		ft_printf("no links\n");
-		return ;
-	}
-/*	print_queue(queue);
-	print_path(path, rooms);
-	ft_printf("AFTER REPLACE:\n");
-	print_tab(table, rooms);
-*/	nodes = -1;
+		return (find_sp_free(&table, rooms, &path, NULL));
+	nodes = -1;
 	path[0] += 1;
 	while (queue[++nodes] != 0)
 	{
 		path[path[0]] = queue[nodes];
-/*		ft_printf("new path: go for %d\n", queue[nodes]);
-		print_path(path, rooms);
-*/		find_shortest_path(tab_dup(table, rooms), rooms, dup_path(path, rooms), shortest);
+		find_sp(tab_dup(table, rooms), rooms, dup_path(path, rooms), shortest);
 	}
-	find_sp_free(&table, rooms, &path, &queue);
+	return (find_sp_free(&table, rooms, &path, NULL));
 }
