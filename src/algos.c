@@ -95,6 +95,31 @@ void		dijkstra(t_graph **graph, int *path, int longer, int node)
 }
 */
 
+void		add_path(t_graph **graph, int **path)
+{
+	int	**ret;
+	int	i;
+	int	j;
+
+	i = 0;
+//	if (!((*graph)->paths))
+//		i++;
+	while ((*graph)->paths && (*graph)->paths[i])
+		i++;
+	ret = (int **)malloc(sizeof(int*) * (i + 1));
+	j = -1;
+	while ((*graph)->paths[++j])
+	{
+		i = -1;
+		ret[j] = (int*)malloc(sizeof(int) * ((*graph)->rooms + 2);
+		while (++i < (*graph)->rooms + 1)
+			ret[j][i] = (*graph)->table[j][i];
+	}
+	i = -1;
+	while (++i < (*graph)->rooms + 1)
+		ret[j][i] = 0;
+}
+
 void		node_chomper(t_graph **graph, int **path)
 {
 	int	i;
