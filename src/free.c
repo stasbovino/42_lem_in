@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 19:33:26 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/18 02:39:58 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/19 20:09:58 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,20 @@ void	free_input(char ***input, int size)
 	free(*input);
 }
 
+void	free_paths(int ***paths)
+{
+	int i;
+
+	i = -1;
+	while ((*paths)[++i] != NULL)
+		free((*paths)[i]);
+	free(*paths);
+}
+
 void	free_graph(t_graph **graph)
 {
 	free_tables(&((*graph)->table), &((*graph)->list), (*graph)->rooms);
-	if ((*graph)->path)
-		free((*graph)->path);
 	if ((*graph)->paths)
-		free((*graph)->paths);
+		free_paths(&(*graph)->paths);
 	free(*graph);
 }
