@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 19:52:18 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 17:07:41 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/19 20:38:56 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,32 @@ void	print_graph(t_graph *graph)
 	print_tab(graph->table, graph->rooms);
 }
 
-void	print_path(int *path, int rooms)
+void	print_path(int *path)
 {
 	int i;
 
 	i = 0;
 	ft_printf("len of path: %d\n", path[0]);
-	while (++i < (rooms + 2))
+	while (path[++i] != 0)
 		ft_printf("%d ", path[i]);
+	ft_printf("\n");
+}
+
+void	print_paths(int **paths)
+{
+	int i;
+
+	i = -1;
+	ft_printf("PATHS:\n");
+	if (!paths || !*paths)
+	{
+		ft_printf("no paths\n\n");
+		return ;
+	}
+	while (paths[++i])
+	{
+		print_path(paths[i]);
+	}
 	ft_printf("\n");
 }
 

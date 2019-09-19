@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 16:59:11 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/19 20:07:31 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ typedef struct	s_graph
 	int			**table;
 	char		**list;
 	int			x;
-	int			*path;
 	int			**paths;
 }				t_graph;
 
 void			print_tab(int **int_table, int rooms);
 void			print_graph(t_graph *graph);
-void			print_path(int *path, int rooms);
+void			print_path(int *path);
+void			print_paths(int **paths);
 void			print_queue(int *queue);
 
 int				**tab_dup(int **table, int rooms);
@@ -39,6 +39,7 @@ int				*dup_path(int *path, int rooms);
 int				find_sp(int **table, int rooms, int *path, int **shortest);
 
 void			init_path(int **path, int rooms);
+void			add_path(t_graph **graph, int **path);
 
 char			**read_input(int *size);
 
