@@ -139,6 +139,8 @@ void		node_chomper(t_graph **graph, int **path)
 		}
 		(*path)[i] = 0;
 	}
+	if (*path)
+		free((*path));
 }
 
 void		init_alg(t_graph **abs_graph)
@@ -150,20 +152,27 @@ void		init_alg(t_graph **abs_graph)
 	shortest = NULL;
 	graph = *abs_graph;
 	init_path(&path, graph->rooms);
-	path[0] = 1;
-	path[1] = 1;
  /*
- *	моя дикстра
- *	еще я добавила функции
- *	print_path(int *path, int rooms)
- *	init_path(int **path, int rooms)
- *	юзай на здоровье как г-рится
- */
-	find_sp(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
- /*
-  *	решение в shortest лежит
-  *	если решения нет то NULL
+  *ищу первый путь
   */
+ 
+	find_sp(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
+//	free(path);
+	ft_printf("SOLUTION:\n");
+	if (shortest)
+	{
+		print_path(shortest);
+//		free(shortest);
+	}
+	else
+		ft_printf("\x1b[31mno path\n\x1b[0m");
+	node_chomper(&graph, &shortest);
+//зануляю ноды пути и сам путь^
+	print_tab(graph->table, graph->rooms);
+	init_path(&path, graph->rooms);
+//пытаюсь инициализировать path^
+	find_sp(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
+//ищу новый путь в зануленном тейбле
 	ft_printf("SOLUTION:\n");
 	if (shortest)
 	{
@@ -172,7 +181,6 @@ void		init_alg(t_graph **abs_graph)
 	}
 	else
 		ft_printf("\x1b[31mno path\n\x1b[0m");
-	node_chomper(&graph, &shortest);
-	print_tab(graph->table, graph->rooms);
+
 //	dijkstra(&graph, path, 0, 1);
 }
