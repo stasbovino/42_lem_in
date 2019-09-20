@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 17:58:54 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/20 16:36:35 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/20 21:24:06 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ void	cpy_path(int **dest, int *src)
 		(*dest)[i] = src[i];
 }
 
-int		**re_init_table(int ***old, int rooms)
+int		**re_init_table(int ***old, int rooms, int bytes)
 {
 	int **new;
 	int	i;
 	int	len;
 
-	len = rooms * 2;
+	len = bytes * 2;
 	new = (int**)malloc(sizeof(int*) * (len + 1));
 	i = -1;
 	while (++i < len)
 	{
 		init_path(&(new[i]), rooms);
-		if (i < rooms)
+		if (i < bytes)
 		{
 			cpy_path(&(new[i]), (*old)[i]);
 			free((*old)[i]);
@@ -47,12 +47,14 @@ int		**re_init_table(int ***old, int rooms)
 void	add_path(int ***tab, int rooms, int **path)
 {
 	int		i;
+	int		bytes;
 
+	bytes = 10;
 	if (*tab == NULL)
 	{
 		i = -1;
-		*tab = (int**)malloc(sizeof(int*) * (rooms + 1));
-		while (++i < rooms)
+		*tab = (int**)malloc(sizeof(int*) * (bytes + 1));
+		while (++i < bytes)
 			init_path(&((*tab)[i]), rooms);
 		(*tab)[i] = NULL;
 	}
@@ -66,7 +68,7 @@ void	add_path(int ***tab, int rooms, int **path)
 	}
 	else
 	{
-		*tab = re_init_table(tab, i);
+		*tab = re_init_table(tab, rooms, bytes);
 		add_path(tab, rooms, path);
 	}
 }

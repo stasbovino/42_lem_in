@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 19:52:18 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 20:38:56 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/20 21:44:57 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_paths(int **paths)
 		ft_printf("no paths\n\n");
 		return ;
 	}
-	while (paths[++i])
+	while (paths[++i][0] != 1)
 	{
 		print_path(paths[i]);
 	}
