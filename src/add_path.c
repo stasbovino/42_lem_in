@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 17:58:54 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 20:40:13 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/20 16:36:35 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,33 +44,29 @@ int		**re_init_table(int ***old, int rooms)
 	return (new);
 }
 
-void	add_path(t_graph **graph, int **path)
+void	add_path(int ***tab, int rooms, int **path)
 {
-	t_graph *g;
 	int		i;
-	int		rooms;
 
-	g = *graph;
-	rooms = g->rooms;
-	if (g->paths == NULL)
+	if (*tab == NULL)
 	{
 		i = -1;
-		g->paths = (int**)malloc(sizeof(int*) * (rooms + 1));
+		*tab = (int**)malloc(sizeof(int*) * (rooms + 1));
 		while (++i < rooms)
-			init_path(&((g->paths)[i]), rooms);
-		(g->paths)[i] = NULL;
+			init_path(&((*tab)[i]), rooms);
+		(*tab)[i] = NULL;
 	}
 	i = 0;
-	while ((g->paths)[i] && (g->paths)[i][0] != 1)
+	while ((*tab)[i] && (*tab)[i][0] != 1)
 		i++;
-	if ((g->paths)[i])
+	if ((*tab)[i])
 	{
-		cpy_path(&((g->paths)[i]), *path);
+		cpy_path(&((*tab)[i]), *path);
 //		free(*path);
 	}
 	else
 	{
-		g->paths = re_init_table(&(g->paths), i);
-		add_path(graph, path);
+		*tab = re_init_table(tab, i);
+		add_path(tab, rooms, path);
 	}
 }

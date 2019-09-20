@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 20:07:31 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/20 17:49:51 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ int				**tab_dup(int **table, int rooms);
 int				*dup_path(int *path, int rooms);
 
 int				find_sp(int **table, int rooms, int *path, int **shortest);
+int				find_sh_paths(int **table, int rooms, int *path, int ***shortests);
 
 void			init_path(int **path, int rooms);
-void			add_path(t_graph **graph, int **path);
+void			add_path(int ***tab, int rooms, int **path);
 
 char			**read_input(int *size);
 
@@ -64,6 +65,7 @@ int				free_split(char ***split, int words, int ret);
 void			free_tables(int ***int_table, char ***table, int rooms);
 void			free_input(char ***input, int size);
 void			free_graph(t_graph **graph);
+void			free_paths(int ***paths);
 
 int				find_no_room(char *s);
 int				find_no_link(char *s);
