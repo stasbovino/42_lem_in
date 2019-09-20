@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:22:11 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/20 18:16:34 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/20 20:28:41 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ int			find_sh_paths(int **table, int rooms, int *path, int ***shortests)
 		else if (path[0] <= (*shortests)[0][0])
 		{
 			if (path[0] < (*shortests)[0][0])
+			{
 				free_paths(shortests);
+				*shortests = NULL;
+			}
 			add_path(shortests, rooms, &path);
 		}
 		return (find_sh_paths_free(&table, rooms, &path, NULL));
