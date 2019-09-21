@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 19:51:08 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/21 17:59:27 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int				**allocate_table(int rooms)
 	return (int_table);
 }
 
-static int		**init_int_table(int rooms)
+int				**init_int_table(int rooms)
 {
 	int	**int_table;
 	int	i;

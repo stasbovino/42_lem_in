@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/09/20 20:16:20 by tiyellow         ###   ########.fr       */
+/*   Updated: 2019/09/21 19:56:35 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		node_chomper(t_graph **graph, int **path)
 	while (*path && (*path)[++i] && (*path)[i] != (*graph)->rooms)
 	{
 		j = 0;
-		while(++j <= (*graph)->rooms)
+		while (++j <= (*graph)->rooms)
 		{
 			if ((*graph)->table[(*path)[i]][j])
 			{
@@ -39,14 +39,16 @@ void		init_alg(t_graph **abs_graph)
 {
 	t_graph		*graph;
 	int		*path;
-	int		*shortest;
+//	int		*shortest;
 	int		**shortests;
 
 	graph = *abs_graph;
-	shortest = NULL;
+//	shortest = NULL;
 	shortests = NULL;
-	init_path(&path, graph->rooms); 
-	find_sh_paths(graph->table, graph->rooms, path, &shortests);
+	init_path(&path, graph->rooms);
+//	find_sp(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortest);
+//	print_path(shortest);
+	find_sh_paths(tab_dup(graph->table, graph->rooms), graph->rooms, path, &shortests);
 	print_paths(shortests);
 //int				find_sh_paths(int **table, int rooms, int *path, int ***shortests);
 //новая функция, записывает в shortests (указатель на int**) таблицу путей
