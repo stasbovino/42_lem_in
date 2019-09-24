@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/21 17:59:49 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/24 00:32:47 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct	s_graph
 	int			ants;
 	int			**table;
 	char		**list;
-	int			x;
 	int			**paths;
 }				t_graph;
 
@@ -35,6 +34,7 @@ void			print_queue(int *queue);
 
 int				**tab_dup(int **table, int rooms);
 int				*dup_path(int *path, int rooms);
+void			cpy_path(int **dest, int *src);
 
 int				find_sp(int **table, int rooms, int *path, int **shortest);
 int				find_sh_paths(int **table, int rooms, int *path, int ***shortests);
@@ -79,6 +79,6 @@ int				get_ants_num(char **input, int size);
 int				compare_coords(char *input, char **split);
 int				compare_names(char *input, char *name);
 
-void			init_alg(t_graph **abs_graph);
+void			find_solution(t_graph **abs_graph);
 
 #endif

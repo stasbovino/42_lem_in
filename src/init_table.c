@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/21 17:59:27 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/23 22:43:45 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static t_graph	*init_graph(char **table, int **int_table, int rooms, int ants)
 	graph->ants = ants;
 	graph->table = int_table;
 	graph->list = table;
-	graph->x = 0;
 	graph->paths = NULL;
 	return (graph);
 }

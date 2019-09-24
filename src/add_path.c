@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 17:58:54 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/20 21:24:06 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/23 12:41:21 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	add_path(int ***tab, int rooms, int **path)
 	if ((*tab)[i])
 	{
 		cpy_path(&((*tab)[i]), *path);
-//		free(*path);
+		free(*path);
 	}
 	else
 	{
