@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/24 00:32:47 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/24 21:56:12 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int				**tab_dup(int **table, int rooms);
 int				*dup_path(int *path, int rooms);
 void			cpy_path(int **dest, int *src);
 
-int				find_sp(int **table, int rooms, int *path, int **shortest);
-int				find_sh_paths(int **table, int rooms, int *path, int ***shortests);
+void			find_shortest_path(t_graph *graph, int **s);
 
 int				**init_int_table(int rooms);
 void			init_path(int **path, int rooms);

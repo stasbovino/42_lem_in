@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 19:52:18 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/20 21:44:57 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/24 22:08:49 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print_graph(t_graph *graph)
 	ft_printf("ants are: %d\n", graph->ants);
 	while ((graph->list)[++i])
 		ft_printf("%d %s\n", i + 1, (graph->list)[i]);
-	print_tab(graph->table, graph->rooms);
+//	print_tab(graph->table, graph->rooms);
 }
 
 void	print_path(int *path)
@@ -45,6 +45,11 @@ void	print_path(int *path)
 	int i;
 
 	i = 0;
+	if (!path || !*path)
+	{
+		ft_printf("no path\n");
+		return ;
+	}
 	ft_printf("len of path: %d\n", path[0]);
 	while (path[++i] != 0)
 		ft_printf("%d ", path[i]);
@@ -74,7 +79,7 @@ void	print_queue(int *queue)
 	int i;
 
 	i = -1;
-	ft_printf("queue:\n");
+//	ft_printf("queue:\n");
 	while (queue[++i] != 0)
 		ft_printf("%d ", queue[i]);
 	ft_printf("\n");
