@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 17:58:54 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/23 12:41:21 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/25 20:40:41 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		**re_init_table(int ***old, int rooms, int bytes)
 	return (new);
 }
 
-void	add_path(int ***tab, int rooms, int **path)
+int		add_path(int ***tab, int rooms, int **path)
 {
 	int		i;
 	int		bytes;
@@ -71,4 +71,5 @@ void	add_path(int ***tab, int rooms, int **path)
 		*tab = re_init_table(tab, rooms, bytes);
 		add_path(tab, rooms, path);
 	}
+	return (0);
 }

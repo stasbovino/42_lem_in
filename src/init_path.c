@@ -6,20 +6,22 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 22:38:15 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 17:04:35 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/09/25 20:31:10 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		init_path(int **path, int rooms)
+int			init_path(int **path, int rooms)
 {
 	int i;
 
-	*path = (int*)malloc(sizeof(int) * (rooms + 2));
+	if (!(*path = (int*)malloc(sizeof(int) * (rooms + 2))))
+		return (1);
 	i = -1;
 	while (++i < (rooms + 2))
 		(*path)[i] = 0;
 	(*path)[0] = 1;
 	(*path)[1] = 1;
+	return (0);
 }

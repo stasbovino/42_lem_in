@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 17:42:06 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/17 22:48:09 by tiyellow         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:00:40 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char		*get_first_word(char *input)
 	len = 0;
 	while (input[len] != ' ')
 		len++;
-	word = (char*)malloc(sizeof(char) * (len + 1));
+	if (!(word = (char*)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
 	word[len] = '\0';
 	i = -1;
 	while (++i < len)

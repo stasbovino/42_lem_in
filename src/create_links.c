@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 20:05:28 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/24 21:47:47 by sts              ###   ########.fr       */
+/*   Updated: 2019/09/25 18:50:30 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	set_coords(int ***int_table, char **table, char **rooms)
 	(*int_table)[b][a] = 1;
 }
 
-void		create_links(int ***int_table, char **table, char **input, int size)
+int			create_links(int ***int_table, char **table, char **input, int size)
 {
 	int		i;
 	char	**rooms;
@@ -47,8 +47,10 @@ void		create_links(int ***int_table, char **table, char **input, int size)
 	{
 		if (input[i][0] == '#')
 			continue ;
-		rooms = ft_strsplit(input[i], '-');
+		if (!(rooms = ft_strsplit(input[i], '-')))
+			return (1);
 		set_coords(int_table, table, rooms);
 		free_split(&rooms, 2, 0);
 	}
+	return (0);
 }

@@ -27,15 +27,20 @@ static void	push_to_queue(int **queue, int i)
 	(*queue)[n + 1] = 0;
 }
 
-static void	create_path(int **s, int rooms, int *visited)
+static int	create_path(int **s, int rooms, int *visited)
 {
 	int j;
 	int	n;
 	int	*path;
 	int	len;
 
-	init_path(&path, rooms);
-	init_path(s, rooms);
+	if (init_path(&path, rooms))
+		return (1);
+	if (init_path(s, rooms))
+	{
+		free(path);
+		return (1);
+	}
 	j = rooms - 1;
 	path[0] = rooms;
 	n = 1;
@@ -53,18 +58,24 @@ static void	create_path(int **s, int rooms, int *visited)
 	while (len > 0)
 		(*s)[++n] = path[--len];
 	free(path);
+	return (0);
 }
 
-void		find_shortest_path(t_graph *graph, int **s)
+int			find_shortest_path(t_graph *graph, int **s)
 {
 	int	*queue;
 	int	*visited;
 	int	j;
 	int	i;
 
-	init_path(&queue, graph->rooms - 1);
+	if (init_path(&queue, graph->rooms - 1))
+		return (2);
 	queue[1] = 0;
-	init_path(&visited, graph->rooms - 1);
+	if (init_path(&visited, graph->rooms - 1))
+	{
+		free(queue);
+		return (2);
+	}
 	visited[0] = 1;
 	visited[1] = 0;
 	j = 0;
@@ -90,10 +101,15 @@ void		find_shortest_path(t_graph *graph, int **s)
 */					if (j == graph->rooms)
 					{
 //						ft_printf("\x1b[32mfounded!\x1b[0m\n");
-						create_path(s, graph->rooms, visited);
+						if (create_path(s, graph->rooms, visited))
+						{
+							free(visited);
+							free(queue);
+							return (2);
+						}
 						free(visited);
 						free(queue);
-						return ;
+						return (0);
 					}
 				}
 			}
@@ -105,4 +121,5 @@ void		find_shortest_path(t_graph *graph, int **s)
 	*s = NULL;
 	free(visited);
 	free(queue);
+	return (1);
 }
