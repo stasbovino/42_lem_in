@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/25 21:04:12 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/03 17:15:09 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(void)
 
 	i = -1;
 	size = 0;
-	input = read_input(&size);
+	input = read_input(&size, -1, 0);
 	ft_printf("size: %d\n", size);
 	if (input == NULL)
 	{

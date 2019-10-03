@@ -6,13 +6,13 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 18:16:49 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/25 20:25:29 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/03 17:09:43 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void		*free_all(char ***table, int ***int_table, int rooms, int opt)
+void			*free_all(char ***table, int ***int_table, int rooms, int opt)
 {
 	int i;
 
@@ -60,6 +60,15 @@ int				**allocate_table(int rooms)
 	return (int_table);
 }
 
+static void		fill_line(int **line, int start, int c, int rooms)
+{
+	int i;
+
+	i = start;
+	while (++i <= (rooms + 1))
+		(*line)[i] = c;
+}
+
 int				**init_int_table(int rooms)
 {
 	int	**int_table;
@@ -78,31 +87,9 @@ int				**init_int_table(int rooms)
 	int_table[i][0] = 0;
 	i = 0;
 	while (++i < (rooms + 1))
-	{
-		j = 0;
-		while (++j < (rooms + 1))
-			int_table[i][j] = 0;
-		int_table[i][j] = 0;
-	}
-	j = 0;
-	while (++j < (rooms + 2))
-		int_table[i][j] = 0;
+		fill_line(&int_table[i], 0, 0, rooms);
+	fill_line(&int_table[i], -1, 0, rooms);
 	return (int_table);
-}
-
-static t_graph	*init_graph(char **table, int **int_table, int rooms, int ants)
-{
-	t_graph *graph;
-
-	if (!(graph = (t_graph*)malloc(sizeof(t_graph))))
-		return (free_all(&table, &int_table, rooms, rooms));
-	graph->rooms = rooms;
-	graph->ants = ants;
-	graph->table = int_table;
-	graph->list = table;
-	graph->paths = NULL;
-	graph->flows = NULL;
-	return (graph);
 }
 
 t_graph			*create_table(char **input, int size)
@@ -111,12 +98,10 @@ t_graph			*create_table(char **input, int size)
 	char	**table;
 	int		**int_table;
 	int		i;
-	t_graph	*graph;
+	t_graph	*g;
 
 	rooms = count_rooms(input, size);
-	if (rooms == 0)
-		return (NULL);
-	if (!(table = (char**)malloc(sizeof(char*) * (rooms + 1))))
+	if (rooms == 0 || (!(table = (char**)malloc(sizeof(char*) * (rooms + 1)))))
 		return (NULL);
 	i = 0;
 	if (!(table[0] = get_next_room_name(input, size, 0)))
@@ -131,7 +116,7 @@ t_graph			*create_table(char **input, int size)
 		return (free_all(&table, NULL, rooms, rooms));
 	if (create_links(&int_table, table, input, size))
 		return (free_all(&table, &int_table, rooms, rooms));
-	if (!(graph = init_graph(table, int_table, rooms, get_ants_num(input, size))))
+	if (!(g = init_graph(table, int_table, rooms, get_ants_num(input, size))))
 		return (NULL);
-	return (graph);
+	return (g);
 }

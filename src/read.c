@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 20:15:30 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/25 20:27:33 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/03 17:14:55 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,12 @@ static int	write_to_arr(char ***input, int *count, char **buf)
 	return (0);
 }
 
-char		**read_input(int *size)
+char		**read_input(int *size, int useful, int count)
 {
 	char	**input;
 	char	*buf;
 	int		r;
-	int		count;
-	int		useful;
 
-	useful = -1;
-	count = 0;
 	buf = NULL;
 	if (!(input = (char**)malloc(sizeof(char*) * SIZE)))
 		return (read_error(NULL, 0, NULL));

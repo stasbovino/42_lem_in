@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/25 20:31:46 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/03 17:15:52 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ void			cpy_path(int **dest, int *src);
 
 int				find_shortest_path(t_graph *graph, int **s);
 
+t_graph			*init_graph(char **table, int **int_table, int rooms, int ants);
 int				**init_int_table(int rooms);
 int				init_path(int **path, int rooms);
 int				add_path(int ***tab, int rooms, int **path);
 
-char			**read_input(int *size);
+char			**read_input(int *size, int useful, int count);
 
 t_graph			*create_table(char **input, int size);
 int				**allocate_table(int rooms);
@@ -62,11 +63,15 @@ int				count_rooms(char **input, int size);
 int				create_links(int ***int_table, char **table,
 		char **input, int size);
 
+void			*free_all(char ***table, int ***int_table, int rooms, int opt);
 int				free_split(char ***split, int words, int ret);
 void			free_tables(int ***int_table, char ***table, int rooms);
 void			free_input(char ***input, int size);
 void			free_graph(t_graph **graph);
 void			free_paths(int ***paths);
+
+void			pop_from_queue(int **queue);
+void			push_to_queue(int **queue, int i);
 
 int				find_no_room(char *s);
 int				find_no_link(char *s);

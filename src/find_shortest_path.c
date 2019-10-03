@@ -1,30 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_shortest_path.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/02 17:48:36 by gwyman-m          #+#    #+#             */
+/*   Updated: 2019/10/03 17:13:13 by gwyman-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-static void	pop_from_queue(int **queue)
+static	int	free_and_return(int **visited, int **queue, int ret)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while ((*queue)[j] != 0)
-		j++;
-	while (i != j)
-	{
-		(*queue)[i] = (*queue)[i + 1];
-		i++;
-	}
-}
-
-static void	push_to_queue(int **queue, int i)
-{
-	int n;
-
-	n = 0;
-	while ((*queue)[n] != 0)
-		n++;
-	(*queue)[n] = i;
-	(*queue)[n + 1] = 0;
+	if (visited)
+		free(*visited);
+	if (queue)
+		free(*queue);
+	return (ret);
 }
 
 static int	create_path(int **s, int rooms, int *visited)
@@ -37,18 +31,14 @@ static int	create_path(int **s, int rooms, int *visited)
 	if (init_path(&path, rooms))
 		return (1);
 	if (init_path(s, rooms))
-	{
-		free(path);
-		return (1);
-	}
+		return (free_and_return(&path, NULL, 1));
 	j = rooms - 1;
 	path[0] = rooms;
 	n = 1;
 	while (j != 0)
 	{
-		path[n] = visited[j];
+		path[n++] = visited[j];
 		j = visited[j] - 1;
-		n++;
 	}
 	len = 0;
 	while (path[len] != 0)
@@ -57,7 +47,17 @@ static int	create_path(int **s, int rooms, int *visited)
 	(*s)[n] = len;
 	while (len > 0)
 		(*s)[++n] = path[--len];
-	free(path);
+	return (free_and_return(&path, NULL, 0));
+}
+
+static int	prepare_for_find(t_graph *graph, int **queue, int **visited)
+{
+	if (init_path(queue, graph->rooms - 1))
+		return (2);
+	(*queue)[1] = 0;
+	if (init_path(visited, graph->rooms - 1))
+		return (free_and_return(NULL, queue, 2));
+	(*visited)[1] = 0;
 	return (0);
 }
 
@@ -68,58 +68,24 @@ int			find_shortest_path(t_graph *graph, int **s)
 	int	j;
 	int	i;
 
-	if (init_path(&queue, graph->rooms - 1))
+	if (prepare_for_find(graph, &queue, &visited) != 0)
 		return (2);
-	queue[1] = 0;
-	if (init_path(&visited, graph->rooms - 1))
-	{
-		free(queue);
-		return (2);
-	}
-	visited[0] = 1;
-	visited[1] = 0;
-	j = 0;
 	while (queue[0] != 0)
 	{
 		i = queue[0];
 		j = 0;
-/*		ft_printf("before pop:\n");
-		print_queue(queue);
-*/		pop_from_queue(&queue);
-/*		ft_printf("poped:\n");
-		print_queue(queue);
-*/		while (++j < (graph->rooms + 2))
-		{
-			if ((graph->table)[i][j] == 1)
+		pop_from_queue(&queue);
+		while (++j < (graph->rooms + 2))
+			if ((graph->table)[i][j] == 1 && visited[j - 1] == 0)
 			{
-				if (visited[j - 1] == 0)
-				{
-					visited[j - 1] = i;
-					push_to_queue(&queue, j);
-/*					ft_printf("pushed:\n");
-					print_queue(queue);
-*/					if (j == graph->rooms)
-					{
-//						ft_printf("\x1b[32mfounded!\x1b[0m\n");
-						if (create_path(s, graph->rooms, visited))
-						{
-							free(visited);
-							free(queue);
-							return (2);
-						}
-						free(visited);
-						free(queue);
-						return (0);
-					}
-				}
+				visited[j - 1] = i;
+				push_to_queue(&queue, j);
+				if (j == graph->rooms && create_path(s, graph->rooms, visited))
+					return (free_and_return(&visited, &queue, 2));
+				else if (j == graph->rooms)
+					return (free_and_return(&visited, &queue, 0));
 			}
-		}
-/*		ft_printf("new queue:\n");
-		print_queue(queue);
-		ft_printf("\n");
-*/	}
+	}
 	*s = NULL;
-	free(visited);
-	free(queue);
-	return (1);
+	return (free_and_return(&visited, &queue, 1));
 }

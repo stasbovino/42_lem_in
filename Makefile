@@ -6,7 +6,7 @@
 #    By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 23:35:25 by gwyman-m          #+#    #+#              #
-#    Updated: 2019/09/24 21:57:09 by sts              ###   ########.fr        #
+#    Updated: 2019/10/03 17:12:57 by gwyman-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ HEADER=	lem_in.h
 CFILES= main.c count_and_check_func.c valid_split.c validation.c init_table.c \
 		get_.c find_no_.c compare.c free.c print.c create_links.c read.c \
 		check_start_and_end.c solution.c dup_.c init_path.c add_path.c \
-		find_shortest_path.c \
+		find_shortest_path.c init_graph.c queue.c \
 
 OFILES= $(CFILES:%.c=%.o)
 
