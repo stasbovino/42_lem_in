@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/03 17:15:52 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/05 21:17:12 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				**tab_dup(int **table, int rooms);
 int				*dup_path(int *path, int rooms);
 void			cpy_path(int **dest, int *src);
 
-int				find_shortest_path(t_graph *graph, int **s);
+int				find_shortest_path(int **table, int rooms, int **s);
 
 t_graph			*init_graph(char **table, int **int_table, int rooms, int ants);
 int				**init_int_table(int rooms);
@@ -48,6 +48,7 @@ char			**read_input(int *size, int useful, int count);
 
 t_graph			*create_table(char **input, int size);
 int				**allocate_table(int rooms);
+int				**double_table(int **begin);
 
 int				check_split(char **input, int count, char ***split, int words);
 int				check_start_and_end(char **input, int count);
@@ -84,6 +85,6 @@ int				get_ants_num(char **input, int size);
 int				compare_coords(char *input, char **split);
 int				compare_names(char *input, char *name);
 
-void			find_solution(t_graph **abs_graph);
+int				find_solution(t_graph **abs_graph);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 17:58:54 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/02 18:41:01 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/05 22:34:07 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,12 @@ static int	**re_init_table(int ***old, int rooms, int *bytes)
 	int	len;
 
 	len = *bytes * 2;
-	*bytes = len;
 	if (!(new = (int**)malloc(sizeof(int*) * (len + 1))))
 		return (NULL);
 	i = -1;
 	while (++i < len)
 	{
-		if (!(init_path(&(new[i]), rooms)))
+		if (init_path(&(new[i]), rooms))
 			return (free_table(old, &new, i, *bytes));
 		if (i < *bytes)
 		{
@@ -58,6 +57,7 @@ static int	**re_init_table(int ***old, int rooms, int *bytes)
 	}
 	new[i] = NULL;
 	free(*old);
+	*bytes = len;
 	return (new);
 }
 
@@ -85,7 +85,7 @@ static int	init_table(int ***tab, int bytes, int rooms)
 int			add_path(int ***tab, int rooms, int **path)
 {
 	int			i;
-	static int	bytes = 10;
+	static int	bytes = 1;
 
 	if (*tab == NULL)
 		if (init_table(tab, bytes, rooms))
