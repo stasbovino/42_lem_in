@@ -6,14 +6,66 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/06 05:10:48 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/06 23:11:34 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		print_solution(void)
+char		*create_str(int n, char *room)
 {
+	char	*s;
+
+	s = ft_strnew(1);
+	s[0] = 'L';
+	s = ft_strrejoin(s, ft_itoa(n));
+	s = ft_strrejoin(s, "-");
+	s = ft_strrejoin(s, room);
+	s = ft_strrejoin(s, " ");
+	return (s);
+}
+
+void		print_solution(t_graph *graph, int *flows)
+{
+	char **turns;
+	int i;
+	int j;
+	int n;
+	int start;
+	int curr;
+	char *str;
+	int need;
+
+	i = -1;
+	need = (graph->paths)[0][0] / 2 - 1 + flows[0];
+	turns = (char**)malloc(sizeof(char*) * (need + 1));
+	while (++i < need)
+		turns[i] = ft_strnew(0);
+	turns[i] = NULL;
+	i = -1;
+	curr = 1;
+	while (flows[++i] != -1)
+	{
+		start = -1;
+		while (flows[i] > 0)
+		{
+			j = 4;
+			start++;
+			n = start;
+			while (j <= (graph->paths)[i][0])
+			{
+				str = create_str(curr, (graph->list)[(graph->paths)[i][j] / 2 - 1]);
+				turns[n] = ft_strrejoin(turns[n], str);
+				n++;
+				j += 2;
+			}
+			flows[i]--;
+			curr++;
+		}
+	}
+	i = -1;
+	while (turns[++i])
+		ft_printf("%s\n", turns[i]);
 }
 
 void		print_flows(int *flows)
@@ -82,6 +134,7 @@ int			create_solution(t_graph **graph, int **table, int rooms)
 	int ants;
 	int sum;
 	int n;
+	int *flows;
 
 	find_shortest_path(table, rooms, &path);
 	sum = 0;
@@ -99,7 +152,8 @@ int			create_solution(t_graph **graph, int **table, int rooms)
 	}
 	print_paths((*graph)->paths);
 	ft_printf("ants	%d vs sum %d\n", ants, sum);
-	create_flows((*graph)->paths, n, ants, sum);
+	flows = create_flows((*graph)->paths, n, ants, sum);
+	print_solution(*graph, flows);
 	return (0);
 }
 
