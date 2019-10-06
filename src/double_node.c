@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 19:35:29 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/05 22:47:02 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/06 04:32:18 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int			**double_table(int **begin)
 {
 	int i;
 	int j;
-	int n;
-	int k;
 	int **new;
 	int rooms;
 	int old_rooms;
@@ -38,12 +36,10 @@ int			**double_table(int **begin)
 		return (NULL);
 	i = 1;
 	j = 0;
-	n = 0;
-	k = 0;
 	while (i < rooms)
 	{
 		new[i][i + 1] = 1;
-		new[i + 1][i] = 1;
+//		new[i + 1][i] = 0;
 		i += 2;
 	}
 	i = 0;
@@ -54,7 +50,9 @@ int			**double_table(int **begin)
 		{
 			if (begin[i][j] == 1)
 			{
-				if (j < i)
+				new[i * 2][j * 2 - 1] = 1;
+				new[j * 2][i * 2 - 1] = 1;
+/*				if (j < i)
 				{
 					new[i * 2 - 1][j * 2] = 1;
 				}
@@ -62,8 +60,9 @@ int			**double_table(int **begin)
 				{
 					new[i * 2][j * 2 - 1] = 1;
 				}
-			}
+*/			}
 		}
 	}
+//	print_tab(new, rooms);
 	return (new);
 }

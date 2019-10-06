@@ -6,44 +6,74 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/05 23:48:58 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/06 05:10:48 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+void		print_solution(void)
+{
+}
+
+void		print_flows(int *flows)
+{
+	int i;
+
+	i = -1;
+	while (flows[++i] != -1)
+		ft_printf("%d ", flows[i]);
+	ft_printf("F\n");
+}
+
 int			*create_flows(int **paths, int n, int ants, int sum)
 {
 	int i;
 	int *flows;
-	int j;
-	int len;
 	int k;
-	int len_next;
 
 	i = -1;
+	k = sum;
 	flows = (int*)malloc(sizeof(int) * (n + 1));
 	while (++i < n)
 		flows[i] = 0;
 	flows[i] = -1;
 	i = 0;
-	while (paths[i][0] == paths[0][0])
+	while (paths[i] && paths[i][0] != 1 && paths[i][0] == paths[0][0])
 		i++;
 	k = i;
 	i = 0;
-	while (i < k)
+	while (ants > 0 && i < k)
 	{
-		flows[i]++;
-		if (paths[i][0] / 2 - 2 + flows[i] < paths[k][0])
-			i = 0;
-		else
+		if (paths[k] && paths[k][0] != 1 && i + 1 != k
+				&& (paths[i][0] / 2 - 2 + flows[i]) == (paths[k][0] / 2 - 2))
 		{
-			i = 0;
-			while (paths[i][0] <= paths[k][0])
-				i++;
-			k = paths[i][0];
+			i++;
+			continue ;
 		}
+		if (i + 1 == k)
+		{
+			if (paths[k] && paths[k][0] != 1
+					&& (paths[i][0] / 2 - 2 + flows[i]) == (paths[k][0] / 2 - 2))
+			{
+				i = 0;
+				while (paths[i] && paths[i][0] != 1 && paths[i][0] <= paths[k][0])
+					i++;
+				k = i;
+				i = 0;
+				continue ;
+			}
+			flows[i]++;
+			ants--;
+			i = 0;
+			continue ;
+		}
+		flows[i]++;
+		ants--;
+		i++;
 	}
+	print_flows(flows);
+	return (flows);
 }
 
 int			create_solution(t_graph **graph, int **table, int rooms)
@@ -52,11 +82,9 @@ int			create_solution(t_graph **graph, int **table, int rooms)
 	int ants;
 	int sum;
 	int n;
-	int i;
 
 	find_shortest_path(table, rooms, &path);
 	sum = 0;
-	i = -1;
 	n = 0;
 	ants = (*graph)->ants;
 	while (path)
@@ -73,10 +101,6 @@ int			create_solution(t_graph **graph, int **table, int rooms)
 	ft_printf("ants	%d vs sum %d\n", ants, sum);
 	create_flows((*graph)->paths, n, ants, sum);
 	return (0);
-}
-
-void		print_solution(void)
-{
 }
 
 void		reweight(int **table, int *path)
