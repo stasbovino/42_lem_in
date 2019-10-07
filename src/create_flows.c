@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:27:20 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/07 15:45:03 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/08 01:09:50 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ static void	print_flows(int *flows)
 	ft_printf("F\n");
 }
 
-int			*create_flows(int **paths, int n, int ants, int sum)
+int			*create_flows(int **paths, int n, int ants)
 {
 	int i;
 	int *flows;
 	int k;
 
 	i = -1;
-	k = sum;
 	if (!(flows = (int*)malloc(sizeof(int) * (n + 1))))
 		return (NULL);
 	while (++i < n)
