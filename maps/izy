@@ -1,6 +1,13 @@
-12
+4
 ##start
 a 2 3
+c 3 3
+d 4 4
+e 5 5
 ##end
 b 3 4
-a-b
+a-c
+c-b
+a-d
+d-e
+e-b

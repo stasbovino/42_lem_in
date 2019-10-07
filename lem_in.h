@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/05 21:17:12 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/07 15:46:36 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int				get_ants_num(char **input, int size);
 int				compare_coords(char *input, char **split);
 int				compare_names(char *input, char *name);
 
+int				*create_flows(int **paths, int n, int ants, int sum);
 int				find_solution(t_graph **abs_graph);
+int				create_solution(t_graph **graph, int **table, int rooms);
 
 #endif
