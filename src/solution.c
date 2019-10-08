@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/07 18:06:46 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/08 02:58:40 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ int			find_solution(t_graph **graph)
 	int	*path;
 	int **table;
 	int **begin;
+	int **reserve;
+	int *flows;
+	int previous;
 	int rooms;
 	int ret;
 
@@ -70,6 +73,37 @@ int			find_solution(t_graph **graph)
 		return (free_solution(&table, NULL, rooms, 2));
 	if ((ret = find_shortest_path(table, rooms, &path)) != 0)
 		return (free_solution(&table, &begin, rooms, ret));
+	previous = INT_MAX;
+	while (ants && path)
+	{
+		ants--;
+		print_path(path);
+		reweight(table, path);
+		reserve = tab_dup(begin, rooms);
+		restruct_table(table, begin, rooms);
+		ret = create_solution(graph, begin, rooms, &flows);
+		begin = reserve;
+		ft_printf("prev is %d return is %d\n", previous, ret);
+		if (ret == -1)
+			return (-1);
+		else if (ret == -2)
+			break ;
+		if (ret <= previous)
+		{
+			previous = ret;
+			(*graph)->paths = NULL;
+		}
+		else
+			break ;
+		if ((find_shortest_path(table, rooms, &path)) == 2)
+			return (free_solution(&table, &begin, rooms, ret));
+	}
+	restruct_table(table, begin, rooms);
+	create_solution(graph, begin, rooms, &flows);
+	print_solution(*graph, flows);
+	return (0);
+}
+	/*
 	while (ants && path)
 	{
 		ants--;
@@ -84,4 +118,4 @@ int			find_solution(t_graph **graph)
 	if ((ret = create_solution(graph, begin, rooms)) != 0)
 		return (free_solution(&table, &begin, rooms, ret));
 	return (free_solution(&table, &begin, rooms, 0));
-}
+	*/

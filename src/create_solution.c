@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:46:48 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/08 01:09:40 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/08 02:56:52 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,19 @@ int			print_solution(t_graph *graph, int *flows)
 	return (0);
 }
 
-int			create_solution(t_graph **graph, int **table, int rooms)
+int			create_solution(t_graph **graph, int **table, int rooms, int **f)
 {
 	int	*path;
 	int ants;
 	int n;
 	int *flows;
+	int ret;
 
-	if (find_shortest_path(table, rooms, &path))
-		return (2);
+	if ((ret = find_shortest_path(table, rooms, &path)) == 1)
+		return (-2);
+	*f = NULL;
+	if (ret == -1)
+		return (-1);
 	n = 0;
 	ants = (*graph)->ants;
 	while (path)
@@ -120,17 +124,13 @@ int			create_solution(t_graph **graph, int **table, int rooms)
 		n++;
 		table[path[2]][path[3]] = 0;
 		if (add_path(&((*graph)->paths), rooms * 2, &path))
-			return (2);
+			return (-1);
 		if ((find_shortest_path(table, rooms, &path)) == 2)
-			return (2);
+			return (-1);
 	}
 	print_paths((*graph)->paths);
 	if (!(flows = create_flows((*graph)->paths, n, ants)))
-		return (2);
-	if (print_solution(*graph, flows))
-	{
-		free(flows);
-		return (2);
-	}
-	return (0);
+		return (-1);
+	*f = flows;
+	return (flows[0] + (*graph)->paths[0][0] / 2 - 2);
 }

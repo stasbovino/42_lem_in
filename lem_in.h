@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/08 01:08:56 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/08 02:47:21 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LEM_IN_H
 
 # include "libft.h"
-
+#include "limits.h"
 # define SIZE 4000
 
 typedef struct	s_graph
@@ -32,6 +32,7 @@ void			print_graph(t_graph *graph);
 void			print_path(int *path);
 void			print_paths(int **paths);
 void			print_queue(int *queue);
+int				print_solution(t_graph *graph, int *flows);
 
 int				**tab_dup(int **table, int rooms);
 int				*dup_path(int *path, int rooms);
@@ -87,6 +88,6 @@ int				compare_names(char *input, char *name);
 
 int				*create_flows(int **paths, int n, int ants);
 int				find_solution(t_graph **abs_graph);
-int				create_solution(t_graph **graph, int **table, int rooms);
+int				create_solution(t_graph **graph, int **table, int rooms, int **f);
 
 #endif
