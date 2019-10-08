@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/08 13:23:32 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/08 20:07:03 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,21 @@ void		restruct_table(int **table, int **begin, int rooms)
 			if (begin[i][j] == 1 && table[i][j] != 0)
 				begin[i][j] = 0;
 		}
+	}
+}
+
+void		back_weight(int **table, int *path)
+{
+	int	end;
+	int	i;
+
+	i = 2;
+	end = path[path[0]];
+	while (path[i + 1] != end)
+	{
+		table[path[i]][path[i + 1]] += 1;
+		table[path[i + 1]][path[i]] -= 1;
+		i++;
 	}
 }
 
@@ -91,7 +106,6 @@ int			find_solution(t_graph **graph)
 		ants--;
 //		print_path(path);
 		reweight(table, path);
-		free(path);
 		reserve = tab_dup(begin, rooms);
 		restruct_table(table, begin, rooms);
 		ret = create_solution(graph, begin, rooms, &flows);
@@ -106,6 +120,9 @@ int			find_solution(t_graph **graph)
 		else if (ret == -2)
 		{
 			ft_printf("\x1b[32mno more flows\n\x1b[0m");
+			free_paths(&(*graph)->paths);
+			(*graph)->paths = NULL;
+			back_weight(table, path);
 			break ;
 		}
 		if (ret <= previous)
@@ -114,11 +131,15 @@ int			find_solution(t_graph **graph)
 			free_paths(&(*graph)->paths);
 			(*graph)->paths = NULL;
 		}
-		if (ret > previous || check_flows(flows))
+		else if (ret > previous || check_flows(flows))
 		{
 			ft_printf("\x1b[31mnew flow is worse OR zero path\n\x1b[0m");
+			free_paths(&(*graph)->paths);
+			(*graph)->paths = NULL;
+			back_weight(table, path);
 			break ;
 		}
+		free(path);
 		if ((find_shortest_path(table, rooms, &path)) == 2)
 			return (free_solution(&table, &begin, rooms, ret));
 	}

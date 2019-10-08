@@ -6,13 +6,13 @@
 #    By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 23:35:25 by gwyman-m          #+#    #+#              #
-#    Updated: 2019/10/08 03:08:22 by sts              ###   ########.fr        #
+#    Updated: 2019/10/08 20:16:12 by gwyman-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LEM_IN=lem-in
 
-FLAGS = -g -Wall -Wextra -Werror -I. -I libft/ -pg
+FLAGS = -g -Ofast -march=native -Wall -Wextra -Werror -I. -I libft/ -pg
 LIB = -L libft/ -lft
 
 SRC_DIR= src/
