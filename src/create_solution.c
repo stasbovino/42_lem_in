@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:46:48 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/08 02:56:52 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/08 03:27:29 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int			print_solution(t_graph *graph, int *flows)
 					free(str);
 					return (free_turns(&turns, need));
 				}
+				free(str);
 				n++;
 				j += 2;
 			}
@@ -101,6 +102,7 @@ int			print_solution(t_graph *graph, int *flows)
 	while (turns[++i])
 		ft_printf("%s\n", turns[i]);
 	ft_printf("TOTAL: %d\n", need - 1);
+	free_turns(&turns, need);
 	return (0);
 }
 
@@ -114,6 +116,8 @@ int			create_solution(t_graph **graph, int **table, int rooms, int **f)
 
 	if ((ret = find_shortest_path(table, rooms, &path)) == 1)
 		return (-2);
+	if (*f)
+		free(*f);
 	*f = NULL;
 	if (ret == -1)
 		return (-1);

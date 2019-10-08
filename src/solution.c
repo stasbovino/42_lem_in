@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/08 02:58:40 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/08 03:35:41 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,17 @@ int			find_solution(t_graph **graph)
 	if ((ret = find_shortest_path(table, rooms, &path)) != 0)
 		return (free_solution(&table, &begin, rooms, ret));
 	previous = INT_MAX;
+	flows = NULL;
 	while (ants && path)
 	{
 		ants--;
 		print_path(path);
 		reweight(table, path);
+		free(path);
 		reserve = tab_dup(begin, rooms);
 		restruct_table(table, begin, rooms);
 		ret = create_solution(graph, begin, rooms, &flows);
+		free_tables(&begin, NULL, rooms);
 		begin = reserve;
 		ft_printf("prev is %d return is %d\n", previous, ret);
 		if (ret == -1)
@@ -91,6 +94,7 @@ int			find_solution(t_graph **graph)
 		if (ret <= previous)
 		{
 			previous = ret;
+			free_paths(&(*graph)->paths);
 			(*graph)->paths = NULL;
 		}
 		else
@@ -101,6 +105,8 @@ int			find_solution(t_graph **graph)
 	restruct_table(table, begin, rooms);
 	create_solution(graph, begin, rooms, &flows);
 	print_solution(*graph, flows);
+	free_solution(&table, &begin, rooms, 0);
+	free(flows);
 	return (0);
 }
 	/*
