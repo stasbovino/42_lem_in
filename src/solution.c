@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/08 20:07:03 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/08 23:32:37 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,17 +125,13 @@ int			find_solution(t_graph **graph)
 			back_weight(table, path);
 			break ;
 		}
-		if (ret <= previous)
-		{
-			previous = ret;
 			free_paths(&(*graph)->paths);
 			(*graph)->paths = NULL;
-		}
-		else if (ret > previous || check_flows(flows))
+		if (ret <= previous && !(ret == previous && check_flows(flows)))
+			previous = ret;
+		else
 		{
 			ft_printf("\x1b[31mnew flow is worse OR zero path\n\x1b[0m");
-			free_paths(&(*graph)->paths);
-			(*graph)->paths = NULL;
 			back_weight(table, path);
 			break ;
 		}
