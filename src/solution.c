@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/08 23:32:37 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/09 00:40:52 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,34 @@ void		restruct_table(int **table, int **begin, int rooms)
 	}
 }
 
+int			restore_table(int **begin, int rooms, int opt)
+{
+	static int	**fixed = NULL;
+	int			i;
+	int			j;
+
+	if (fixed == NULL)
+	{
+		fixed = tab_dup(begin, rooms);
+		if (!fixed)
+			return (1);
+		return (0);
+	}
+	if (opt == 1)
+	{
+		free_tables(&fixed, NULL, rooms);
+		return (0);
+	}
+	i = 0;
+	while (++i < (rooms + 2))
+	{
+		j = 0;
+		while (++j < (rooms + 2))
+			begin[i][j] = fixed[i][j];
+	}
+	return (0);
+}
+
 void		back_weight(int **table, int *path)
 {
 	int	end;
@@ -79,13 +107,29 @@ int			check_flows(int *flows)
 	return (0);
 }
 
+int			init_search(int ***table, int ***begin, int **path, t_graph *graph)
+{
+	int ret;
+	int rooms;
+
+	rooms = graph->rooms * 2;
+	if (!(*table = double_table(graph->table)))
+		return (2);
+	else if (!(*begin = tab_dup(*table, rooms)))
+		return (free_solution(table, NULL, rooms, 2));
+	if (restore_table(*begin, rooms, 0))
+		return (free_solution(table, begin, rooms, 2));
+	if ((ret = find_shortest_path(*table, rooms, path)) != 0)
+		return (free_solution(table, begin, rooms, ret));
+	return (0);
+}
+
 int			find_solution(t_graph **graph)
 {
 	int ants;
 	int	*path;
 	int **table;
 	int **begin;
-	int **reserve;
 	int *flows;
 	int previous;
 	int rooms;
@@ -93,12 +137,8 @@ int			find_solution(t_graph **graph)
 
 	ants = (*graph)->ants;
 	rooms = (*graph)->rooms * 2;
-	if (!(table = double_table((*graph)->table)))
-		return (2);
-	else if (!(begin = tab_dup(table, rooms)))
-		return (free_solution(&table, NULL, rooms, 2));
-	if ((ret = find_shortest_path(table, rooms, &path)) != 0)
-		return (free_solution(&table, &begin, rooms, ret));
+	if ((ret = init_search(&table, &begin, &path, *graph)) != 0)
+		return (ret);
 	previous = INT_MAX;
 	flows = NULL;
 	while (ants && path)
@@ -106,11 +146,9 @@ int			find_solution(t_graph **graph)
 		ants--;
 //		print_path(path);
 		reweight(table, path);
-		reserve = tab_dup(begin, rooms);
 		restruct_table(table, begin, rooms);
 		ret = create_solution(graph, begin, rooms, &flows);
-		free_tables(&begin, NULL, rooms);
-		begin = reserve;
+		restore_table(begin, rooms, 0);
 		ft_printf("new turns are \x1b[33m%d\n\x1b[0m", ret);
 		if (ret == -1)
 		{
@@ -147,6 +185,7 @@ int			find_solution(t_graph **graph)
 	create_solution(graph, begin, rooms, &flows);
 	print_solution(*graph, flows);
 	free_solution(&table, &begin, rooms, 0);
+	restore_table(NULL, rooms, 1);
 	free(flows);
 	return (0);
 }
