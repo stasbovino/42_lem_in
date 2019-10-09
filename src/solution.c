@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/09 02:59:34 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/09 03:08:41 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			restore_table(int **begin, int rooms, int opt)
 	if (fixed == NULL)
 	{
 		fixed = tab_dup(begin, rooms);
-		if (1 || !fixed)
+		if (!fixed)
 			return (1);
 		return (0);
 	}
@@ -192,7 +192,7 @@ int			find_solution(t_graph **graph)
 	if (!path)
 		ft_printf("\x1b[33mF for paths\n\x1b[0m");
 	restruct_table(table, begin, rooms);
-	if (1 || (ret = create_solution(graph, begin, rooms, &flows)) == -1)
+	if ((ret = create_solution(graph, begin, rooms, &flows)) == -1)
 	{
 		free(flows);
 		return (free_solution(&table, &begin, rooms, ret));

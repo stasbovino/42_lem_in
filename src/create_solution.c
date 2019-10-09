@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:46:48 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/09 03:05:47 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/09 03:09:05 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char		*create_str(int n, char *room)
 
 	numlen = ft_numlen((size_t)n);
 	roomlen = ft_strlen(room);
-	if (1 || !(s = ft_strnew(3 + numlen + roomlen)))
+	if (!(s = ft_strnew(3 + numlen + roomlen)))
 		return (NULL);
 	s[0] = 'L';
 	i = numlen + 1;
