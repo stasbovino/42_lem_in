@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:48:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/09 17:37:26 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/09 22:08:22 by tiyellow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int	prepare_for_find(int rooms, int **queue, int **visited)
 	return (0);
 }
 
-
 int			find_shortest_path(int **table, int rooms, int **s)
 {
 	int	*queue;
@@ -91,39 +90,3 @@ int			find_shortest_path(int **table, int rooms, int **s)
 	*s = NULL;
 	return (free_and_return(&visited, &queue, 1));
 }
-
-/*
-int			find_shortest_path(int **table, int rooms, int **s)
-{
-	int	*queue;
-	int	*visited;
-	int	j;
-	int	i;
-
-	if (prepare_for_find(rooms, &queue, &visited) != 0)
-		return (2);
-//		print_queue(queue, rooms);
-	while (1)
-	{
-	//	i = queue[0];
-//		pop_from_queue(&queue);
-		do_queue_op(queue, &i, -1, rooms);
-		if (i == 0)
-			break ;
-		j = 0;
-		while (++j < (rooms + 2))
-			if (table[i][j] != 0 && visited[j - 1] == 0)
-			{
-				visited[j - 1] = i;
-//				push_to_queue(&queue, j);
-				do_queue_op(queue, &j, 1, rooms);
-				if (j == rooms && create_path(s, rooms, visited))
-					return (free_and_return(&visited, &queue, 2));
-				else if (j == rooms)
-					return (free_and_return(&visited, &queue, 0));
-			}
-	}
-	*s = NULL;
-	return (free_and_return(&visited, &queue, 1));
-}
-*/

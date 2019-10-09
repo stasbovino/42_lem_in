@@ -6,52 +6,48 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 17:11:08 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/09 17:15:43 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/09 22:25:49 by tiyellow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	do_queue_op(int *queue, int *i, int op, int rooms)
+static void	doop_helper(int *begin, int *end, int *elem)
+{
+	*begin = 0;
+	*end = 0;
+	*elem = 1;
+}
+
+void		do_queue_op(int *queue, int *i, int op, int rooms)
 {
 	static int begin = 0;
 	static int end = 0;
 	static int elem = 1;
 
 	if (op == 0)
-	{
-		begin = 0;
-		end = 0;
-		elem = 1;
-		return ;
-	}
+		doop_helper(&begin, &end, &elem);
 	if (op == -1)
 	{
 		*i = queue[begin];
 		queue[begin] = 0;
 		elem--;
 		begin++;
-		if (begin == rooms)
-			begin = 0;
-		if (elem == 0)
-		{
-			end = 0;
-			begin = 0;
-		}
-		else if (elem == 1)
-			end = begin + 1;
+		begin = begin == rooms ? 0 : begin;
+		end = elem == 0 ? 0 : end;
+		begin = elem == 0 ? 0 : begin;
+		end = elem == 1 ? begin + 1 : end;
 	}
 	else if (op == 1)
 	{
 		queue[end] = *i;
 		elem++;
 		end++;
-		if (end == rooms)
-			end = 0;
+		end = end == rooms ? 0 : end;
 	}
 }
 
-void	pop_from_queue(int **queue)
+void		pop_from_queue(int **queue)
 {
 	int	i;
 	int	j;
@@ -67,7 +63,7 @@ void	pop_from_queue(int **queue)
 	}
 }
 
-void	push_to_queue(int **queue, int i)
+void		push_to_queue(int **queue, int i)
 {
 	int n;
 
