@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:27:20 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/09 23:21:18 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/10 02:17:15 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,17 @@ int			*create_flows(int **paths, int n, int ants)
 	set_new_highscore(paths, &k, &i);
 	while (ants > 0 && ++i < k)
 	{
-		if (paths[k] && paths[k][0] != 1 && (paths[i][0] / 2 - 2 + f[i]) == (paths[k][0] / 2 - 2))
-			if (i + 1 != k)
-			{
-			}
-/*		if (paths[k] && paths[k][0] != 1 && i + 1 != k
+		if (paths[k] && paths[k][0] != 1
 				&& (paths[i][0] / 2 - 2 + f[i]) == (paths[k][0] / 2 - 2))
-			continue ;
-		if (i + 1 == k)
 		{
-			if (paths[k] && paths[k][0] != 1
-					&& (paths[i][0] / 2 - 2 + f[i]) == (paths[k][0] / 2 - 2))
+			if (i + 1 == k)
 				set_new_highscore(paths, &k, &i);
-			else
-			{
-				f[i]++;
-				ants--;
-				i = -1;
-			}
 			continue ;
 		}
-*/		f[i]++;
+		f[i]++;
 		ants--;
+		if (i + 1 == k)
+			i = -1;
 	}
 	return (f);
 }
