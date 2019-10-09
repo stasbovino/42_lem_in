@@ -6,7 +6,7 @@
 #    By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 23:35:25 by gwyman-m          #+#    #+#              #
-#    Updated: 2019/10/09 17:58:54 by gwyman-m         ###   ########.fr        #
+#    Updated: 2019/10/09 21:57:41 by gwyman-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ CFILES= main.c count_and_check_func.c valid_split.c validation.c init_table.c \
 		get_.c find_no_.c compare.c free.c print.c create_links.c read.c \
 		check_start_and_end.c solution.c dup_.c init_path.c add_path.c \
 		find_shortest_path.c init_graph.c queue.c double_node.c \
-		create_flows.c create_solution.c table_operations.c
+		create_flows.c create_solution.c table_operations.c print_solution.c \
+
 
 OFILES= $(CFILES:%.c=%.o)
 
