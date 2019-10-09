@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:27:20 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/09 17:41:19 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/09 23:21:18 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,52 +22,66 @@ void	print_flows(int *flows)
 	ft_printf("F\n");
 }
 
+static int	init_flows(int **flows, int n)
+{
+	int i;
+
+	if (!(*flows = (int*)malloc(sizeof(int) * (n + 1))))
+		return (1);
+	i = -1;
+	while (++i < n)
+		(*flows)[i] = 0;
+	(*flows)[i] = -1;
+	return (0);
+}
+
+static void	set_new_highscore(int **paths, int *k, int *begin)
+{
+	int i;
+	int t;
+
+	i = 0;
+	t = *k;
+	while (paths[i] && paths[i][0] != 1 && paths[i][0] <= paths[t][0])
+		i++;
+	*k = i;
+	*begin = -1;
+}
+
 int			*create_flows(int **paths, int n, int ants)
 {
 	int i;
-	int *flows;
+	int *f;
 	int k;
 
-	i = -1;
-	if (!(flows = (int*)malloc(sizeof(int) * (n + 1))))
+	if (init_flows(&f, n))
 		return (NULL);
-	while (++i < n)
-		flows[i] = 0;
-	flows[i] = -1;
-	i = 0;
-	while (paths[i] && paths[i][0] != 1 && paths[i][0] == paths[0][0])
-		i++;
-	k = i;
-	i = 0;
-	while (ants > 0 && i < k)
+	k = 0;
+	set_new_highscore(paths, &k, &i);
+	while (ants > 0 && ++i < k)
 	{
-		if (paths[k] && paths[k][0] != 1 && i + 1 != k
-				&& (paths[i][0] / 2 - 2 + flows[i]) == (paths[k][0] / 2 - 2))
-		{
-			i++;
+		if (paths[k] && paths[k][0] != 1 && (paths[i][0] / 2 - 2 + f[i]) == (paths[k][0] / 2 - 2))
+			if (i + 1 != k)
+			{
+			}
+/*		if (paths[k] && paths[k][0] != 1 && i + 1 != k
+				&& (paths[i][0] / 2 - 2 + f[i]) == (paths[k][0] / 2 - 2))
 			continue ;
-		}
 		if (i + 1 == k)
 		{
 			if (paths[k] && paths[k][0] != 1
-					&& (paths[i][0] / 2 - 2 + flows[i]) == (paths[k][0] / 2 - 2))
+					&& (paths[i][0] / 2 - 2 + f[i]) == (paths[k][0] / 2 - 2))
+				set_new_highscore(paths, &k, &i);
+			else
 			{
-				i = 0;
-				while (paths[i] && paths[i][0] != 1 && paths[i][0] <= paths[k][0])
-					i++;
-				k = i;
-				i = 0;
-				continue ;
+				f[i]++;
+				ants--;
+				i = -1;
 			}
-			flows[i]++;
-			ants--;
-			i = 0;
 			continue ;
 		}
-		flows[i]++;
+*/		f[i]++;
 		ants--;
-		i++;
 	}
-//	print_flows(flows);
-	return (flows);
+	return (f);
 }
