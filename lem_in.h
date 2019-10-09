@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/08 02:47:21 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/09 17:50:01 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int				print_solution(t_graph *graph, int *flows);
 int				**tab_dup(int **table, int rooms);
 int				*dup_path(int *path, int rooms);
 void			cpy_path(int **dest, int *src);
+void			reweight(int **table, int *path);
+void			restruct_table(int **table, int **begin, int rooms);
+int				restore_table(int **begin, int rooms, int opt);
+void			back_weight(int **table, int *path);
 
 int				find_shortest_path(int **table, int rooms, int **s);
 
@@ -72,6 +76,7 @@ void			free_input(char ***input, int size);
 void			free_graph(t_graph **graph);
 void			free_paths(int ***paths);
 
+void			do_queue_op(int *queue, int *i, int op, int rooms);
 void			pop_from_queue(int **queue);
 void			push_to_queue(int **queue, int i);
 

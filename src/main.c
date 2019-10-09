@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/09 00:44:07 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/09 18:14:09 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ int	main(void)
 	}
 	else
 	{
+//		ft_printf("%s\n", input[size - 1]);
 		while (++i < size)
 		{
-			ft_printf("%s\n", input[i]);
+			ft_putstr(input[i]);
+			ft_putchar('\n');
+//			ft_printf("%s\n", input[i]);
 		}
 		i = -1;
 		if (!(graph = create_table(input, size)))

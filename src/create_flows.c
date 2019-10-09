@@ -6,13 +6,13 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:27:20 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/08 19:57:55 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/09 17:41:19 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void	print_flows(int *flows)
+void	print_flows(int *flows)
 {
 	int i;
 
@@ -68,6 +68,6 @@ int			*create_flows(int **paths, int n, int ants)
 		ants--;
 		i++;
 	}
-	print_flows(flows);
+//	print_flows(flows);
 	return (flows);
 }
