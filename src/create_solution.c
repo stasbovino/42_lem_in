@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:46:48 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/08 18:50:59 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/09 03:05:47 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char		*create_str(int n, char *room)
 
 	numlen = ft_numlen((size_t)n);
 	roomlen = ft_strlen(room);
-	if (!(s = ft_strnew(3 + numlen + roomlen)))
+	if (1 || !(s = ft_strnew(3 + numlen + roomlen)))
 		return (NULL);
 	s[0] = 'L';
 	i = numlen + 1;
@@ -83,7 +83,8 @@ int			print_solution(t_graph *graph, int *flows)
 			n = start;
 			while (j <= (graph->paths)[i][0])
 			{
-				if (!(str = create_str(curr, (graph->list)[(graph->paths)[i][j] / 2 - 1])))
+				if (!(str = create_str(curr,
+								(graph->list)[(graph->paths)[i][j] / 2 - 1])))
 					return (free_turns(&turns, need));
 				if (!(turns[n] = ft_strrejoin(turns[n], str)))
 				{

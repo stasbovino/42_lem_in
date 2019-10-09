@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/09 00:40:52 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/09 02:59:34 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			restore_table(int **begin, int rooms, int opt)
 	if (fixed == NULL)
 	{
 		fixed = tab_dup(begin, rooms);
-		if (!fixed)
+		if (1 || !fixed)
 			return (1);
 		return (0);
 	}
@@ -93,6 +93,7 @@ static int	free_solution(int ***table, int ***begin, int rooms, int ret)
 		free_tables(table, NULL, rooms);
 	if (begin)
 		free_tables(begin, NULL, rooms);
+	restore_table(NULL, rooms, 1);
 	return (ret);
 }
 
@@ -153,7 +154,8 @@ int			find_solution(t_graph **graph)
 		if (ret == -1)
 		{
 			ft_printf("\x1b[31mmalloc error\n\x1b[0m");
-			return (-1);
+			free(path);
+			return (free_solution(&table, &begin, rooms, ret));
 		}
 		else if (ret == -2)
 		{
@@ -161,31 +163,42 @@ int			find_solution(t_graph **graph)
 			free_paths(&(*graph)->paths);
 			(*graph)->paths = NULL;
 			back_weight(table, path);
+			free(path);
 			break ;
 		}
-			free_paths(&(*graph)->paths);
-			(*graph)->paths = NULL;
+		free_paths(&(*graph)->paths);
+		(*graph)->paths = NULL;
 		if (ret <= previous && !(ret == previous && check_flows(flows)))
 			previous = ret;
 		else
 		{
 			ft_printf("\x1b[31mnew flow is worse OR zero path\n\x1b[0m");
 			back_weight(table, path);
+			free(path);
 			break ;
 		}
 		free(path);
 		if ((find_shortest_path(table, rooms, &path)) == 2)
+		{
+			free(flows);
 			return (free_solution(&table, &begin, rooms, ret));
+		}
 	}
 	if (ants == 0)
+	{
 		ft_printf("\x1b[33mF for ants\n\x1b[0m");
+		free(path);
+	}
 	if (!path)
 		ft_printf("\x1b[33mF for paths\n\x1b[0m");
 	restruct_table(table, begin, rooms);
-	create_solution(graph, begin, rooms, &flows);
+	if (1 || (ret = create_solution(graph, begin, rooms, &flows)) == -1)
+	{
+		free(flows);
+		return (free_solution(&table, &begin, rooms, ret));
+	}
 	print_solution(*graph, flows);
 	free_solution(&table, &begin, rooms, 0);
-	restore_table(NULL, rooms, 1);
 	free(flows);
 	return (0);
 }
