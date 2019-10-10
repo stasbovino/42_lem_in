@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:46:48 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/09 21:57:18 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/10 16:42:58 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,17 @@ int			create_solution(t_graph **graph, int **table, int rooms, int **f)
 	if ((ret = find_shortest_path(table, rooms, &path)) == 1)
 		return (-2);
 	free_and_null(f);
-	if (ret == -1)
+	if (ret == 2)
 		return (-1);
 	n = 0;
 	while (path)
 	{
 		n++;
 		table[path[2]][path[3]] = 0;
-		if (add_path(&((*graph)->paths), rooms * 2, &path))
+		if (ret = add_path(&((*graph)->paths), rooms * 2, &path))
 			return (-1);
-		if ((find_shortest_path(table, rooms, &path)) == 2)
+		ret = find_shortest_path(table, rooms, &path);
+		if (ret == 2)
 			return (-1);
 	}
 	if (!(flows = create_flows((*graph)->paths, n, (*graph)->ants)))

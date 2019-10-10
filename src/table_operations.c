@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 17:48:05 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/09 17:50:42 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/10 05:16:13 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,17 @@ int			restore_table(int **begin, int rooms, int opt)
 	int			i;
 	int			j;
 
+	if (opt == 1)
+	{
+		if (fixed)
+			free_tables(&fixed, NULL, rooms);
+		return (0);
+	}
 	if (fixed == NULL)
 	{
 		fixed = tab_dup(begin, rooms);
 		if (!fixed)
 			return (1);
-		return (0);
-	}
-	if (opt == 1)
-	{
-		free_tables(&fixed, NULL, rooms);
 		return (0);
 	}
 	i = 0;

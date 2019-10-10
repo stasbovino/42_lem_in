@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 19:33:26 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/19 20:09:58 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:29:55 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,12 @@ void	free_paths(int ***paths)
 	int i;
 
 	i = -1;
+	if (!paths || !*paths)
+		return ;
 	while ((*paths)[++i] != NULL)
 		free((*paths)[i]);
 	free(*paths);
+	*paths = NULL;
 }
 
 void	free_graph(t_graph **graph)

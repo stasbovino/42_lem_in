@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 21:36:56 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/09 22:42:43 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/10 16:55:36 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	init_print_sol(char ***turns, int need)
 	int i;
 
 	i = -1;
-	if (!(*turns = (char**)malloc(sizeof(char*) * need)))
+	if (1 || !(*turns = (char**)malloc(sizeof(char*) * need)))
 		return (1);
 	while (++i < (need - 1))
 		if (!((*turns)[i] = ft_strnew(0)))
@@ -102,7 +102,8 @@ int			print_solution(t_graph *graph, int *flows)
 	int		need;
 
 	need = (graph->paths)[0][0] / 2 - 1 + flows[0];
-	init_print_sol(&turns, need);
+	if (init_print_sol(&turns, need))
+		return (1);
 	i = -1;
 	while (flows[++i] != -1)
 		if (add_flow(graph, flows, &turns, i))
@@ -110,8 +111,8 @@ int			print_solution(t_graph *graph, int *flows)
 	i = -1;
 	while (turns[++i])
 	{
-		ft_putstr(turns[i]);
-		ft_putchar('\n');
+//		ft_putstr(turns[i]);
+//		ft_putchar('\n');
 	}
 	ft_printf("TOTAL: \x1b[32m%d\x1b[0m\n", need - 1);
 	free_turns(&turns, need);

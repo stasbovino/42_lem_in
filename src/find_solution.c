@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solution.c                                         :+:      :+:    :+:   */
+/*   find_solution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/09 17:51:17 by gwyman-m         ###   ########.fr       */
+/*   Updated: 2019/10/10 16:56:28 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int	free_solution(int ***table, int ***begin, int rooms, int ret)
+static int	free_solution(int ***table, int ***begin, int **path, int ret)
 {
+	int rooms;
+	int **tab;
+
+	rooms = 1;
+	tab = *table;
+	while (tab[0][rooms] != 0)
+		rooms++;
+	rooms--;
+	if (path && *path)
+		free(*path);
 	if (table)
 		free_tables(table, NULL, rooms);
 	if (begin)
@@ -41,89 +51,64 @@ static int	init_search(int ***table, int ***begin, int **path, t_graph *graph)
 	rooms = graph->rooms * 2;
 	if (!(*table = double_table(graph->table)))
 		return (2);
-	else if (!(*begin = tab_dup(*table, rooms)))
-		return (free_solution(table, NULL, rooms, 2));
+	if (!(*begin = tab_dup(*table, rooms)))
+		return (free_solution(table, NULL, NULL, 2));
 	if (restore_table(*begin, rooms, 0))
-		return (free_solution(table, begin, rooms, 2));
+		return (free_solution(table, begin, NULL, 2));
 	if ((ret = find_shortest_path(*table, rooms, path)) != 0)
-		return (free_solution(table, begin, rooms, ret));
+			return (free_solution(table, begin, NULL, ret));
 	return (0);
 }
 
-int			find_solution(t_graph **graph)
+int			find_solution(t_graph **graph, int rooms, int ret)
 {
-	int ants;
 	int	*path;
 	int **table;
 	int **begin;
 	int *flows;
-	int previous;
-	int rooms;
-	int ret;
+	int prev;
 
-	ants = (*graph)->ants;
-	rooms = (*graph)->rooms * 2;
 	if ((ret = init_search(&table, &begin, &path, *graph)) != 0)
 		return (ret);
-	previous = INT_MAX;
+	prev = INT_MAX;
 	flows = NULL;
-	while (ants && path)
+	while (path)
 	{
-		ants--;
-//		print_path(path);
 		reweight(table, path);
 		restruct_table(table, begin, rooms);
 		ret = create_solution(graph, begin, rooms, &flows);
-		restore_table(begin, rooms, 0);
-//		ft_printf("new turns are \x1b[33m%d\n\x1b[0m", ret);
 		if (ret == -1)
 		{
-			ft_printf("\x1b[31mmalloc error\n\x1b[0m");
-			free(path);
-			return (free_solution(&table, &begin, rooms, ret));
+			free(flows);
+			return (free_solution(&table, &begin, &path, ret));
 		}
-		else if (ret == -2)
-		{
-			ft_printf("\x1b[32mno more flows\n\x1b[0m");
-			free_paths(&(*graph)->paths);
-			(*graph)->paths = NULL;
-			back_weight(table, path);
-			free(path);
-			break ;
-		}
-		free_paths(&(*graph)->paths);
-		(*graph)->paths = NULL;
-		if (ret <= previous && !(ret == previous && check_flows(flows)))
-			previous = ret;
+		free_paths(&((*graph)->paths));
+		if (ret != -2 && ret <= prev && !(ret == prev && check_flows(flows)))
+			prev = ret;
 		else
 		{
-			ft_printf("\x1b[31mnew flow is worse OR zero path\n\x1b[0m");
 			back_weight(table, path);
-			free(path);
 			break ;
 		}
 		free(path);
+		path = NULL;
+		restore_table(begin, rooms, 0);
 		if ((find_shortest_path(table, rooms, &path)) == 2)
 		{
 			free(flows);
-			return (free_solution(&table, &begin, rooms, ret));
+			return (free_solution(&table, &begin, &path, ret));
 		}
 	}
-	if (ants == 0)
-	{
-		ft_printf("\x1b[33mF for ants\n\x1b[0m");
-		free(path);
-	}
-	if (!path)
-		ft_printf("\x1b[33mF for paths\n\x1b[0m");
 	restruct_table(table, begin, rooms);
-	if ((ret = create_solution(graph, begin, rooms, &flows)) == -1)
+	if ((ret = create_solution(graph, begin, rooms, &flows)) == -1 || ret == -2)
 	{
 		free(flows);
-		return (free_solution(&table, &begin, rooms, ret));
+		return (free_solution(&table, &begin, &path, ret));
 	}
-	print_solution(*graph, flows);
-	free_solution(&table, &begin, rooms, 0);
+	ret = print_solution(*graph, flows);
+	free_solution(&table, &begin, &path, 0);
 	free(flows);
+	if (ret == 1)
+		return (-2);
 	return (0);
 }
