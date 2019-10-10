@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 21:36:56 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/10 16:55:36 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/10 17:06:05 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	init_print_sol(char ***turns, int need)
 	int i;
 
 	i = -1;
-	if (1 || !(*turns = (char**)malloc(sizeof(char*) * need)))
+	if (!(*turns = (char**)malloc(sizeof(char*) * need)))
 		return (1);
 	while (++i < (need - 1))
 		if (!((*turns)[i] = ft_strnew(0)))
