@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 21:36:56 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/10 17:06:05 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/11 00:16:56 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,9 @@ int			print_solution(t_graph *graph, int *flows)
 	i = -1;
 	while (turns[++i])
 	{
-//		ft_putstr(turns[i]);
-//		ft_putchar('\n');
+		ft_putstr(turns[i]);
+		ft_putchar('\n');
 	}
-	ft_printf("TOTAL: \x1b[32m%d\x1b[0m\n", need - 1);
 	free_turns(&turns, need);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/25 20:29:02 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/10 23:30:37 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int			check_ants(char *buf)
 {
 	if (buf[0] == '-' || check_isnum(buf)
 			|| check_overflow(buf) || ft_atoi(buf) == 0)
+	{
+		ft_putstr("invalid ants\n");
 		return (1);
+	}
 	return (0);
 }
 
