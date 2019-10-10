@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 17:48:05 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/10 05:16:13 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/10 17:59:26 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int			restore_table(int **begin, int rooms, int opt)
 	return (0);
 }
 
-void		back_weight(int **table, int *path)
+int			back_weight(int **table, int *path)
 {
 	int	end;
 	int	i;
@@ -86,4 +86,5 @@ void		back_weight(int **table, int *path)
 		table[path[i + 1]][path[i]] -= 1;
 		i++;
 	}
+	return (1);
 }

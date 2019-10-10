@@ -6,31 +6,11 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/10 16:56:28 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/10 21:58:08 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-static int	free_solution(int ***table, int ***begin, int **path, int ret)
-{
-	int rooms;
-	int **tab;
-
-	rooms = 1;
-	tab = *table;
-	while (tab[0][rooms] != 0)
-		rooms++;
-	rooms--;
-	if (path && *path)
-		free(*path);
-	if (table)
-		free_tables(table, NULL, rooms);
-	if (begin)
-		free_tables(begin, NULL, rooms);
-	restore_table(NULL, rooms, 1);
-	return (ret);
-}
 
 static int	check_flows(int *flows)
 {
@@ -43,72 +23,60 @@ static int	check_flows(int *flows)
 	return (0);
 }
 
-static int	init_search(int ***table, int ***begin, int **path, t_graph *graph)
+static int	new_iteration(int **path, int **table, int **begin, int rooms)
 {
-	int ret;
-	int rooms;
+	free(*path);
+	*path = NULL;
+	restore_table(begin, rooms, 0);
+	if ((find_shortest_path(table, rooms, path)) == 2)
+		return (0);
+	return (1);
+}
 
-	rooms = graph->rooms * 2;
-	if (!(*table = double_table(graph->table)))
-		return (2);
-	if (!(*begin = tab_dup(*table, rooms)))
-		return (free_solution(table, NULL, NULL, 2));
-	if (restore_table(*begin, rooms, 0))
-		return (free_solution(table, begin, NULL, 2));
-	if ((ret = find_shortest_path(*table, rooms, path)) != 0)
-			return (free_solution(table, begin, NULL, ret));
+static void reweight_restruct(int **table, int **begin, int *path, int rooms)
+{
+	reweight(table, path);
+	restruct_table(table, begin, rooms);
+}
+
+static int	ret_prev_compare(int ret, int *last, int *flows)
+{
+	int prev;
+
+	prev = *last;
+	if (ret != -2 && ret <= prev && !(ret == prev && check_flows(flows)))
+	{
+		*last = ret;
+		return (1);
+	}
 	return (0);
 }
 
-int			find_solution(t_graph **graph, int rooms, int ret)
+int			find_solution(t_graph **graph, int rooms, int *flows, int prev)
 {
-	int	*path;
+	int *path;
 	int **table;
 	int **begin;
-	int *flows;
-	int prev;
+	int ret;
 
 	if ((ret = init_search(&table, &begin, &path, *graph)) != 0)
 		return (ret);
-	prev = INT_MAX;
-	flows = NULL;
 	while (path)
 	{
-		reweight(table, path);
-		restruct_table(table, begin, rooms);
-		ret = create_solution(graph, begin, rooms, &flows);
-		if (ret == -1)
-		{
-			free(flows);
-			return (free_solution(&table, &begin, &path, ret));
-		}
+		reweight_restruct(table, begin, path, rooms);
+		if ((ret = create_solution(graph, begin, rooms, &flows)) == -1)
+			return (free_solution_and_flows(&table, &begin, &path, &flows));
 		free_paths(&((*graph)->paths));
-		if (ret != -2 && ret <= prev && !(ret == prev && check_flows(flows)))
-			prev = ret;
-		else
-		{
-			back_weight(table, path);
-			break ;
-		}
-		free(path);
-		path = NULL;
-		restore_table(begin, rooms, 0);
-		if ((find_shortest_path(table, rooms, &path)) == 2)
-		{
-			free(flows);
-			return (free_solution(&table, &begin, &path, ret));
-		}
+		if (!ret_prev_compare(ret, &prev, flows))
+			if (back_weight(table, path) && !restore_table(begin, rooms, 0))
+				break ;
+		if (!new_iteration(&path, table, begin, rooms))
+			return (free_solution_and_flows(&table, &begin, &path, &flows));
 	}
 	restruct_table(table, begin, rooms);
-	if ((ret = create_solution(graph, begin, rooms, &flows)) == -1 || ret == -2)
-	{
-		free(flows);
-		return (free_solution(&table, &begin, &path, ret));
-	}
+	if ((ret = create_solution(graph, begin, rooms, &flows)) == -1)
+		return (free_solution_and_flows(&table, &begin, &path, &flows));
 	ret = print_solution(*graph, flows);
-	free_solution(&table, &begin, &path, 0);
-	free(flows);
-	if (ret == 1)
-		return (-2);
-	return (0);
+	free_solution_and_flows(&table, &begin, &path, &flows);
+	return (end_of_find_solution(ret));
 }

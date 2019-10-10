@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/10 04:31:34 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/10 22:01:37 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			cpy_path(int **dest, int *src);
 void			reweight(int **table, int *path);
 void			restruct_table(int **table, int **begin, int rooms);
 int				restore_table(int **begin, int rooms, int opt);
-void			back_weight(int **table, int *path);
+int				back_weight(int **table, int *path);
 
 int				find_shortest_path(int **table, int rooms, int **s);
 
@@ -76,6 +76,13 @@ void			free_input(char ***input, int size);
 void			free_graph(t_graph **graph);
 void			free_paths(int ***paths);
 
+int				free_solution(int ***table, int ***begin, int **path, int ret);
+int				free_solution_and_flows(int ***table, int ***begin,
+		int **path, int **flows);
+int				init_search(int ***table, int ***begin,
+		int **path, t_graph *graph);
+int				end_of_find_solution(int ret);
+
 void			do_queue_op(int *queue, int *i, int op, int rooms);
 void			pop_from_queue(int **queue);
 void			push_to_queue(int **queue, int i);
@@ -92,7 +99,7 @@ int				compare_coords(char *input, char **split);
 int				compare_names(char *input, char *name);
 
 int				*create_flows(int **paths, int n, int ants);
-int				find_solution(t_graph **graph, int rooms, int ret);
+int				find_solution(t_graph **graph, int rooms, int *flow, int prev);
 int				create_solution(t_graph **graph, int **table, int rooms, int **f);
 
 #endif

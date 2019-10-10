@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:13 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/10 04:30:17 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/10 21:36:52 by sts              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(void)
 		}
 		else
 		{
-			if ((ret = find_solution(&graph, graph->rooms * 2, 0)))
+			if ((ret = find_solution(&graph, graph->rooms * 2, NULL, INT_MAX)))
 			{
 				if (ret == 1)
 					ft_printf("Not a single path from %s to %s\n",
