@@ -6,13 +6,13 @@
 #    By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 23:35:25 by gwyman-m          #+#    #+#              #
-#    Updated: 2019/10/10 02:20:06 by sts              ###   ########.fr        #
+#    Updated: 2019/10/11 19:02:40 by gwyman-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LEM_IN=lem-in
 
-FLAGS = -g -O2 -march=native -Wall -Wextra -Werror -I. -I libft/
+FLAGS = -O2 -march=native -Wall -Wextra -Werror -I. -I libft/
 LIB = -L libft/ -lft
 
 SRC_DIR= src/
@@ -24,6 +24,7 @@ CFILES= main.c count_and_check_func.c valid_split.c validation.c init_table.c \
 		check_start_and_end.c find_solution.c dup_.c init_path.c add_path.c \
 		find_shortest_path.c init_graph.c queue.c double_node.c \
 		create_flows.c create_solution.c table_operations.c print_solution.c \
+		find_solution_add_func.c print_ez_solution.c \
 
 
 OFILES= $(CFILES:%.c=%.o)

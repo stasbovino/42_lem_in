@@ -6,21 +6,11 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:27:20 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/10 16:44:14 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/11 19:02:43 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void	print_flows(int *flows)
-{
-	int i;
-
-	i = -1;
-	while (flows[++i] != -1)
-		ft_printf("%d ", flows[i]);
-	ft_printf("F\n");
-}
 
 static int	init_flows(int **flows, int n)
 {

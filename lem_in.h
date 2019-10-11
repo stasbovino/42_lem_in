@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:07:36 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/10 22:01:37 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/11 19:04:38 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LEM_IN_H
 
 # include "libft.h"
-#include "limits.h"
+# include "limits.h"
 # define SIZE 4000
 
 typedef struct	s_graph
@@ -33,6 +33,7 @@ void			print_path(int *path);
 void			print_paths(int **paths);
 void			print_queue(int *queue);
 int				print_solution(t_graph *graph, int *flows);
+int				print_ez_solution(t_graph *graph);
 
 int				**tab_dup(int **table, int rooms);
 int				*dup_path(int *path, int rooms);
@@ -65,6 +66,7 @@ int				check_isnum(char *num);
 int				check_overflow(char *num);
 int				count_words(char *buf);
 int				count_rooms(char **input, int size);
+int				count_chars(char *s);
 
 int				create_links(int ***int_table, char **table,
 		char **input, int size);
@@ -100,6 +102,7 @@ int				compare_names(char *input, char *name);
 
 int				*create_flows(int **paths, int n, int ants);
 int				find_solution(t_graph **graph, int rooms, int *flow, int prev);
-int				create_solution(t_graph **graph, int **table, int rooms, int **f);
+int				create_solution(t_graph **graph,
+		int **table, int rooms, int **f);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:46:48 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/10 16:42:58 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/11 17:03:10 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			create_solution(t_graph **graph, int **table, int rooms, int **f)
 	{
 		n++;
 		table[path[2]][path[3]] = 0;
-		if (ret = add_path(&((*graph)->paths), rooms * 2, &path))
+		if ((ret = add_path(&((*graph)->paths), rooms * 2, &path)))
 			return (-1);
 		ret = find_shortest_path(table, rooms, &path);
 		if (ret == 2)

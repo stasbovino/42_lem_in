@@ -6,7 +6,7 @@
 /*   By: tiyellow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:43:27 by tiyellow          #+#    #+#             */
-/*   Updated: 2019/10/10 21:58:08 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/11 19:03:10 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	new_iteration(int **path, int **table, int **begin, int rooms)
 	return (1);
 }
 
-static void reweight_restruct(int **table, int **begin, int *path, int rooms)
+static void	reweight_restruct(int **table, int **begin, int *path, int rooms)
 {
 	reweight(table, path);
 	restruct_table(table, begin, rooms);

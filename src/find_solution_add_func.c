@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_solution_add_func.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/11 18:59:46 by gwyman-m          #+#    #+#             */
+/*   Updated: 2019/10/11 18:59:47 by gwyman-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 int	free_solution(int ***table, int ***begin, int **path, int ret)
@@ -47,6 +59,8 @@ int	init_search(int ***table, int ***begin, int **path, t_graph *graph)
 	int ret;
 	int rooms;
 
+	if (graph->table[1][graph->rooms] == 1)
+		return (print_ez_solution(graph));
 	rooms = graph->rooms * 2;
 	if (!(*table = double_table(graph->table)))
 		return (2);
@@ -55,7 +69,7 @@ int	init_search(int ***table, int ***begin, int **path, t_graph *graph)
 	if (restore_table(*begin, rooms, 0))
 		return (free_solution(table, begin, NULL, 2));
 	if ((ret = find_shortest_path(*table, rooms, path)) != 0)
-			return (free_solution(table, begin, NULL, ret));
+		return (free_solution(table, begin, NULL, ret));
 	return (0);
 }
 

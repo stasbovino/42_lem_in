@@ -6,11 +6,27 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:45:10 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/10/10 23:30:37 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/11 18:00:22 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+int			count_chars(char *s)
+{
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (s[i] && s[i] != ' ')
+	{
+		if (s[i] == '-')
+			count++;
+		i++;
+	}
+	return (count);
+}
 
 static int	detect_bad_symbols(char *s)
 {
@@ -18,7 +34,7 @@ static int	detect_bad_symbols(char *s)
 	int	links;
 
 	spaces = ft_countchars(s, ' ');
-	links = ft_countchars(s, '-');
+	links = count_chars(s);
 	if (s[0] == 'L')
 		return (1);
 	if ((links != 0 && spaces != 0) || (links == 0 && spaces == 0))
@@ -67,7 +83,10 @@ int			check_valid(char **input, int count, char *buf, int useful)
 	if (useful == 0)
 		return (check_ants(buf));
 	if (detect_bad_symbols(buf))
+	{
+		ft_putstr("bad symb\n");
 		return (1);
+	}
 	words = count_words(buf);
 	if (check_words(buf, words, &prev))
 		return (1);

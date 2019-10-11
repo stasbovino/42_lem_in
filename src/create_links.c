@@ -6,7 +6,7 @@
 /*   By: gwyman-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 20:05:28 by gwyman-m          #+#    #+#             */
-/*   Updated: 2019/09/25 18:50:30 by sts              ###   ########.fr       */
+/*   Updated: 2019/10/11 18:01:00 by gwyman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			create_links(int ***int_table, char **table, char **input, int size)
 	char	**rooms;
 
 	i = 0;
-	while (input[i] && (input[i][0] == '#' || !ft_strchr(input[i], '-')))
+	while (input[i] && (input[i][0] == '#' || count_chars(input[i]) == 0))
 		i++;
 	i--;
 	while (++i < size)
