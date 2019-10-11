@@ -1,9 +1,0 @@
-12
-##start
-a 1 1
-##end
-b 2 2
-c 3 3
-a-b
-a-c
-c-b
